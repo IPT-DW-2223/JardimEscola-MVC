@@ -26,7 +26,7 @@
         /// código postal das pessoas
         /// </summary>
 
-        public int Identificacao { get; set; }
+        public string Identificacao { get; set; }
         /// <summary>
         /// número de identificação das pessoas
         /// </summary>
