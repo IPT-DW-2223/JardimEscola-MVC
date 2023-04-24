@@ -1,39 +1,42 @@
 ﻿namespace Projeto_Jardim_Escola.Models
 {       
     /// <summary>
-    /// Descrição das pessoas
+    /// Descrição das pessoas.
     /// </summary>
     public class Pessoas{
 
+        /// <summary>
+        /// Chave primária da turma.
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// nome das pessoas
+        /// Nome da pessoa.
         /// </summary>
         public string Nome { get; set; }
 
         /// <summary>
-        /// data de nascimento das pessoas
+        /// Data de nascimento da pessoa.
         /// </summary>
         public DateTime DataNascimento { get; set;}
        
         /// <summary>
-        /// morada das pessoas
+        /// Morada da pessoa.
         /// </summary>
         public string Morada { get; set; }
        
         /// <summary>
-        /// código postal das pessoas
+        /// Código postal da pessoa.
         /// </summary>
         public string CodPostal { get; set; }
         
         /// <summary>
-        /// número de identificação das pessoas
+        /// Número de identificação da pessoa.
         /// </summary>
         public string Identificacao { get; set; }
         
         /// <summary>
-        /// tipo de identificação das pessoas:
+        /// Tipo de identificação da pessoa:
         /// CC - cartão de cidadão
         /// BI - bilhete de identidade
         /// P - passaport
@@ -41,30 +44,55 @@
         public string IdentificacaoTipo { get; set; }
         
         /// <summary>
-        /// número de identificção fiscal das pessoas
+        /// Número de identificção fiscal da pessoa.
         /// </summary>
         public string NIF { get; set; }
         
         /// <summary>
-        /// número de telemóvel das pessoas
+        /// Número de telemóvel da pessoa.
         /// </summary>
         public string Telemovel { get; set; }
         
         /// <summary>
-        /// email das pessoas
+        /// Email da pessoa.
         /// </summary>
         public string Email { get; set; }
         
         /// <summary>
-        /// escolariedade das pessoas
+        /// Escolariedade da pessoa.
         /// </summary>
         public string Escolariedade { get; set; }
 
         /// <summary>
-        /// profissão das pessoas
+        /// Profissão da pessoa.
         /// </summary>
         public string Profissao { get; set; }
-       
+
+        // ---------------------------------------------------------------------------------------- //
+        // ----- [Chaves Estrangeiras] ------------------------------------------------------------ //
+        // ---------------------------------------------------------------------------------------- //
+
+        /// <summary>
+        /// Lista de alunos associados a cada professor ou encarregado de educação.
+        /// </summary>
+        public ICollection<Pessoas> Alunos { get; set; }
+
+        /// <summary>
+        /// Lista de turmas associadas a cada aluno(a) e professor(a).
+        /// </summary>
+        public ICollection<Turmas> Turmas { get; set; }
+
+        /// <summary>
+        /// Encarregado(a) de educação associado(a) a cada aluno(a).
+        /// </summary>
+        public int EncEducacaoFK { get; set; }
+        public Pessoas EncEducacao { get; set; }
+
+        /// <summary>
+        /// Professor(a) associado(a) a cada aluno(a). (!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+        /// </summary>
+        public int ProfessorFK { get; set; }
+        public Pessoas Professor { get; set; }
 
     }
 }

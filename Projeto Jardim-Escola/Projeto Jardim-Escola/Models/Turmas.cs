@@ -20,6 +20,21 @@
         /// </summary>
         public string AnoLetivo { get; set; }
 
+        // ---------------------------------------------------------------------------------------- //
+        // ----- [Chaves Estrangeiras] ------------------------------------------------------------ //
+        // ---------------------------------------------------------------------------------------- //
+
+        /// <summary>
+        /// Lista de alunos associados a cada turma.
+        /// </summary>
+        public ICollection<Pessoas> Alunos { get; set; }
+
+        /// <summary>
+        /// Professor(a) associado(a) à turma.
+        /// </summary>
+        public int ProfessorFK { get; set; }
+        public Pessoas Professor { get; set; }
+
     }
 
 }
