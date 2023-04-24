@@ -21,11 +21,13 @@ namespace Projeto_Jardim_Escola.Models {
         /// <summary>
         /// Nome da turma.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
         public string Nome { get; set; }
 
         /// <summary>
         /// Ano letivo da turma.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
         public string AnoLetivo { get; set; }
 
         // ---------------------------------------------------------------------------------------- //

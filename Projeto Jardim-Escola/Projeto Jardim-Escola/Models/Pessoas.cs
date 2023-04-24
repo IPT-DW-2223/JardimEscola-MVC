@@ -22,26 +22,34 @@ namespace Projeto_Jardim_Escola.Models
         /// <summary>
         /// Nome da pessoa.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
         public string Nome { get; set; }
 
         /// <summary>
         /// Data de nascimento da pessoa.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
+        [Display(Name = "Data de Nascimento")]
         public DateTime DataNascimento { get; set; }
-       
+
         /// <summary>
         /// Morada da pessoa.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
         public string Morada { get; set; }
-       
+
         /// <summary>
         /// Código postal da pessoa.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
+        [Display(Name = "Código Postal")]
         public string CodPostal { get; set; }
-        
+
         /// <summary>
         /// Número de identificação da pessoa.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
+        [Display(Name = "Identificação")]
         public string Identificacao { get; set; }
         
         /// <summary>
@@ -50,31 +58,42 @@ namespace Projeto_Jardim_Escola.Models
         /// BI - bilhete de identidade
         /// P - passaport
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
+        [Display(Name = "Tipo de Identificação")]
         public string IdentificacaoTipo { get; set; }
         
         /// <summary>
         /// Número de identificção fiscal da pessoa.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
         public string NIF { get; set; }
         
         /// <summary>
         /// Número de telemóvel da pessoa.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
+        [Display(Name = "Telemóvel")]
+        [RegularExpression("^\\d{9}$", ErrorMessage = "O número de telemóvel não é válido.")]
         public string Telemovel { get; set; }
         
         /// <summary>
         /// Email da pessoa.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
+        [EmailAddress(ErrorMessage = "Por favor, insira um email válido.")]
         public string Email { get; set; }
         
         /// <summary>
         /// Escolariedade da pessoa.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
         public string Escolariedade { get; set; }
 
         /// <summary>
         /// Profissão da pessoa.
         /// </summary>
+        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
+        [Display(Name = "Profissão")]
         public string Profissao { get; set; }
 
         // ---------------------------------------------------------------------------------------- //
