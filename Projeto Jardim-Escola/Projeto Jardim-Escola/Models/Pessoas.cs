@@ -1,4 +1,7 @@
-﻿namespace Projeto_Jardim_Escola.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Projeto_Jardim_Escola.Models
 {       
     /// <summary>
     /// Descrição das pessoas.
@@ -13,6 +16,7 @@
         /// <summary>
         /// Chave primária da turma.
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
@@ -23,7 +27,7 @@
         /// <summary>
         /// Data de nascimento da pessoa.
         /// </summary>
-        public DateTime DataNascimento { get; set;}
+        public DateTime DataNascimento { get; set; }
        
         /// <summary>
         /// Morada da pessoa.
@@ -90,14 +94,15 @@
         /// <summary>
         /// Encarregado(a) de educação associado(a) a cada aluno(a).
         /// </summary>
+        [ForeignKey(nameof(EncEducacao))]
         public int EncEducacaoFK { get; set; }
         public Pessoas EncEducacao { get; set; }
 
         /// <summary>
         /// Professor(a) associado(a) a cada aluno(a). (!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
         /// </summary>
-        public int ProfessorFK { get; set; }
-        public Pessoas Professor { get; set; }
+        //public int ProfessorFK { get; set; }
+        //public Pessoas Professor { get; set; }
 
     }
 }
