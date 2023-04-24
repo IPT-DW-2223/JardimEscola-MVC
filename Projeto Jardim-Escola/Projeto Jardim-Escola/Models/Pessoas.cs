@@ -5,6 +5,11 @@
     /// </summary>
     public class Pessoas{
 
+        public Pessoas() {
+            Alunos = new HashSet<Pessoas>();
+            Turmas = new HashSet<Turmas>();
+        }
+
         /// <summary>
         /// Chave primária da turma.
         /// </summary>
