@@ -33,6 +33,26 @@ namespace Projeto_Jardim_Escola.Data
             modelBuilder.Entity<Turmas>()
                 .HasMany(p => p.Alunos);
 
+            // Adicionar os dados dos cargos (Roles).
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Id = "adm",  Name = "Admin",             NormalizedName = "ADMIN" },         
+                new IdentityRole { Id = "prof", Name = "Professor",         NormalizedName = "PROFESSOR" },        
+                new IdentityRole { Id = "enc",  Name = "Enc. de Educação",  NormalizedName = "ENC. DE EDUCAÇÃO" }  
+                );
+
+            // Gerar o instância para a classe que cria e verifica hashes seguros de passwords.
+            var hasher = new PasswordHasher<IdentityUser>();
+
+            // Adicionar utilizadores default.
+            modelBuilder.Entity<IdentityUser>().HasData(
+                new IdentityUser {
+                    Id = "0",
+                    Email = "admin@jardimescola.com", NormalizedEmail = "ADMIN@JARDIMESCOLA.COM", EmailConfirmed = true,
+                    UserName = "admin@jardimescola.com", NormalizedUserName = "ADMIN@JARDIMESCOLA.COM",
+                    PasswordHash = hasher.HashPassword(null, "Admin123.")
+                }
+                );
+
         }
 
         // ---------------------------------------------------------------------------------------- //
