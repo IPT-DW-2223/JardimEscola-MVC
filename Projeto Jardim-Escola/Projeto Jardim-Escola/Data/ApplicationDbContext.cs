@@ -53,6 +53,11 @@ namespace Projeto_Jardim_Escola.Data
                 }
                 );
 
+            // Adicionar o cargo "Admin" ao utilizador "admin@jardimescola.com".
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string> { RoleId = "adm", UserId = "0" }
+                );
+
         }
 
         // ---------------------------------------------------------------------------------------- //
