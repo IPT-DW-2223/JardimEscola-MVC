@@ -114,6 +114,7 @@ namespace Projeto_Jardim_Escola.Models
         /// Encarregado(a) de educação associado(a) a cada aluno(a).
         /// </summary>
         [ForeignKey(nameof(EncEducacao))]
+        [Display(Name = "Enc. de Educação")]
         public int EncEducacaoFK { get; set; }
         public Pessoas EncEducacao { get; set; }
 

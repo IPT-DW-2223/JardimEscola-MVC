@@ -28,6 +28,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// Ano letivo da turma.
         /// </summary>
         [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
+        [Display(Name = "Ano Letivo")]
         public string AnoLetivo { get; set; }
 
         // ---------------------------------------------------------------------------------------- //
@@ -43,6 +44,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// Professor(a) associado(a) à turma.
         /// </summary>
         [ForeignKey(nameof(Professor))]
+        [Display(Name = "Selecione um professor:")]
         public int ProfessorFK { get; set; }
         public Pessoas Professor { get; set; }
 
