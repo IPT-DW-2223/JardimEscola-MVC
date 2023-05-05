@@ -56,8 +56,13 @@ namespace Projeto_Jardim_Escola.Data
         // ----- [Adicionar tabelas à base de dados] ---------------------------------------------- //
         // ---------------------------------------------------------------------------------------- //
 
-        public DbSet<Pessoas> Pessoas { get; set; }
-        public DbSet<Turmas> Turmas { get; set; }
+        public DbSet<Pessoas> Pessoas { get; set; }                                           
+        public DbSet<Turmas> Turmas { get; set; }                                              
+        public DbSet<Alunos> Alunos { get; set; }                                                 
+        public DbSet<AnosLetivos> AnosLetivos { get; set; }
+        public DbSet<Professores> Professores { get; set; }
+        public DbSet<Responsaveis> Responsaveis { get; set; }
+        public DbSet<TiposIdentificacao> TiposIdentificacao { get; set; }
 
     }
 }
