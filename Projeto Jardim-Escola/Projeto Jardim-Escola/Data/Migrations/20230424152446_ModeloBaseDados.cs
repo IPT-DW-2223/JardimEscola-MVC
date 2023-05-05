@@ -39,7 +39,8 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         column: x => x.EncEducacaoFK,
                         principalTable: "Pessoas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Restrict,
+                        onUpdate:ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

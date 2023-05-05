@@ -8,10 +8,6 @@ namespace Projeto_Jardim_Escola.Models {
     /// </summary>
     public class Turmas {
 
-        public Turmas() {
-            Alunos = new HashSet<Pessoas>();
-        }
-
         /// <summary>
         /// Chave primária da turma.
         /// </summary>
@@ -24,29 +20,9 @@ namespace Projeto_Jardim_Escola.Models {
         [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
         public string Nome { get; set; }
 
-        /// <summary>
-        /// Ano letivo da turma.
-        /// </summary>
-        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
-        [Display(Name = "Ano Letivo")]
-        public string AnoLetivo { get; set; }
-
         // ---------------------------------------------------------------------------------------- //
         // ----- [Chaves Estrangeiras] ------------------------------------------------------------ //
         // ---------------------------------------------------------------------------------------- //
-
-        /// <summary>
-        /// Lista de alunos associados a cada turma.
-        /// </summary>
-        public ICollection<Pessoas> Alunos { get; set; }
-
-        /// <summary>
-        /// Professor(a) associado(a) à turma.
-        /// </summary>
-        [ForeignKey(nameof(Professor))]
-        [Display(Name = "Selecione um professor:")]
-        public int ProfessorFK { get; set; }
-        public Pessoas Professor { get; set; }
 
     }
 

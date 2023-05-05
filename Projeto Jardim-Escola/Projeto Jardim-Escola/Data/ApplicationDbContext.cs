@@ -25,14 +25,6 @@ namespace Projeto_Jardim_Escola.Data
             // Importa a última execução deste método.
             base.OnModelCreating(modelBuilder);
 
-            // Garante que uma Pessoa (Professor) tem várias Turmas.
-            modelBuilder.Entity<Pessoas>()
-                .HasMany(p => p.Turmas);
-
-            // Garante que uma Turma tem várias Pessoas (Alunos).
-            modelBuilder.Entity<Turmas>()
-                .HasMany(p => p.Alunos);
-
             // Adicionar os dados dos cargos (Roles).
             modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole { Id = "adm",  Name = "Admin",             NormalizedName = "ADMIN" },         
@@ -40,7 +32,7 @@ namespace Projeto_Jardim_Escola.Data
                 new IdentityRole { Id = "enc",  Name = "Enc. de Educação",  NormalizedName = "ENC. DE EDUCAÇÃO" }  
                 );
 
-            // Gerar o instância para a classe que cria e verifica hashes seguros de passwords.
+            // Gerar a instância para a classe que cria e verifica hashes seguros de passwords.
             var hasher = new PasswordHasher<IdentityUser>();
 
             // Adicionar utilizadores default.
