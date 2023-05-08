@@ -7,6 +7,11 @@ namespace Projeto_Jardim_Escola.Models {
     /// </summary>
     public class Responsaveis : Pessoas {
 
+        // ----- [Construtor] --------------------------------------------------------------------- //
+        public Responsaveis() {
+            Alunos = new HashSet<Alunos>();
+        }
+
         /// <summary>
         /// Morada do encarregado de educação.
         /// </summary>
@@ -30,7 +35,7 @@ namespace Projeto_Jardim_Escola.Models {
         [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
         [Display(Name = "Telemóvel")]
         [StringLength(14, MinimumLength = 5, ErrorMessage = "Deve escrever {1} digitos no número {0} ")]
-        [RegularExpression("((+|00)351)?9[1236][0123456789]{7}")]
+        [RegularExpression("9[1236][0-9]{7}", ErrorMessage = "O número de {0} deve começar por 91, 92, 93 ou 96, e ter 9 dígitos")]
         public string Telemovel { get; set; }
 
         /// <summary>
@@ -58,6 +63,11 @@ namespace Projeto_Jardim_Escola.Models {
         // ---------------------------------------------------------------------------------------- //
         // ----- [Chaves Estrangeiras] ------------------------------------------------------------ //
         // ---------------------------------------------------------------------------------------- //
+
+        /// <summary>
+        /// Lista de alunos da turma.
+        /// </summary>
+        public ICollection<Alunos> Alunos { get; set; }
 
     }
 

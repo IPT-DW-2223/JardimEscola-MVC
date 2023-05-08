@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Projeto_Jardim_Escola.Models {
     
@@ -6,6 +7,11 @@ namespace Projeto_Jardim_Escola.Models {
     /// Descrição dos alunos.
     /// </summary>
     public class Alunos : Pessoas {
+
+        // ----- [Construtor] --------------------------------------------------------------------- //
+        public Alunos() {
+            Turmas = new HashSet<Turmas>();
+        }
 
         /// <summary>
         /// Data de nascimento do aluno.
@@ -30,6 +36,18 @@ namespace Projeto_Jardim_Escola.Models {
         // ---------------------------------------------------------------------------------------- //
         // ----- [Chaves Estrangeiras] ------------------------------------------------------------ //
         // ---------------------------------------------------------------------------------------- //
+
+        /// <summary>
+        /// FK para o responsável do aluno.
+        /// </summary>
+        [ForeignKey(nameof(Responsavel))]
+        public int ResponsavelFK { get; set; }
+        public Responsaveis Responsavel { get; set; }
+
+        /// <summary>
+        /// Lista de turmas.
+        /// </summary>
+        public ICollection<Turmas> Turmas { get; set; }
 
     }
 

@@ -37,5 +37,12 @@ namespace Projeto_Jardim_Escola.Models
         // ----- [Chaves Estrangeiras] ------------------------------------------------------------ //
         // ---------------------------------------------------------------------------------------- //
 
+        /// <summary>
+        /// FK para o tipo de identificação da pessoa.
+        /// </summary>
+        [ForeignKey(nameof(TipoIdentificacao))]
+        public int TipoIdentificacaoFK { get; set; }
+        public TiposIdentificacao TipoIdentificacao { get; set; }
+
     }
 }
