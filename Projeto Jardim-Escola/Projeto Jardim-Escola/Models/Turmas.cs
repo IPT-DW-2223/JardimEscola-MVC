@@ -8,6 +8,11 @@ namespace Projeto_Jardim_Escola.Models {
     /// </summary>
     public class Turmas {
 
+        // ----- [Construtor] --------------------------------------------------------------------- //
+        public Turmas() { 
+            Alunos = new HashSet<Alunos>();
+        }
+
         /// <summary>
         /// Chave primária da turma.
         /// </summary>
@@ -23,6 +28,25 @@ namespace Projeto_Jardim_Escola.Models {
         // ---------------------------------------------------------------------------------------- //
         // ----- [Chaves Estrangeiras] ------------------------------------------------------------ //
         // ---------------------------------------------------------------------------------------- //
+
+        /// <summary>
+        /// FK para o ano letivo da turma.
+        /// </summary>
+        [ForeignKey(nameof(AnoLetivo))]
+        public int AnoLetivoFK { get; set; }
+        public AnosLetivos AnoLetivo { get; set; }
+
+        /// <summary>
+        /// FK para o professor da turma.
+        /// </summary>
+        [ForeignKey(nameof(Professor))]
+        public int ProfessorFK { get; set; }
+        public Professores Professor { get; set; }
+
+        /// <summary>
+        /// Lista de alunos da turma.
+        /// </summary>
+        public ICollection<Alunos> Alunos { get; set; }
 
     }
 

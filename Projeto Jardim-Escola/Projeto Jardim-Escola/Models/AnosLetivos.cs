@@ -7,6 +7,11 @@ namespace Projeto_Jardim_Escola.Models {
     /// </summary>
     public class AnosLetivos {
 
+        // ----- [Construtor] --------------------------------------------------------------------- //
+        public AnosLetivos() {
+            Turmas = new HashSet<Turmas>();
+        }
+
         /// <summary>
         /// Chave primária do tipo de identificação.
         /// </summary>
@@ -23,6 +28,11 @@ namespace Projeto_Jardim_Escola.Models {
         // ---------------------------------------------------------------------------------------- //
         // ----- [Chaves Estrangeiras] ------------------------------------------------------------ //
         // ---------------------------------------------------------------------------------------- //
+
+        /// <summary>
+        /// Lista de turmas associadas a um ano letivo.
+        /// </summary>
+        public ICollection<Turmas> Turmas { get; set; }
 
     }
 
