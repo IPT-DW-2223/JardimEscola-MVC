@@ -22,6 +22,21 @@ namespace Projeto_Jardim_Escola.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AlunosTurmas", b =>
+                {
+                    b.Property<int>("AlunosId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TurmasId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AlunosId", "TurmasId");
+
+                    b.HasIndex("TurmasId");
+
+                    b.ToTable("AlunosTurmas");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -163,15 +178,15 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         {
                             Id = "0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fdbccf59-307c-4a2d-8ba9-956c468bb0b6",
+                            ConcurrencyStamp = "9cf0230b-daf8-41ce-93b5-0c03e6084ad3",
                             Email = "admin@jardimescola.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@JARDIMESCOLA.COM",
                             NormalizedUserName = "ADMIN@JARDIMESCOLA.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFs/XS5Z+WeG/xBe5dlQfp7VVaRc30zy0VUiJCz6qMv7sXZeNVtpMNcgQz2ZxanQzQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEQYb4uS68sFbH5ONZYsCz2IECRYZD7eOuBVXXwSVfu4wfUPLe/y11yCtvBYhPMyaw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "775c5ba3-6dab-47e9-83ae-efb2bdb13071",
+                            SecurityStamp = "bceb7217-a7ca-43cc-a26f-03ea78994e95",
                             TwoFactorEnabled = false,
                             UserName = "admin@jardimescola.com"
                         });
@@ -269,73 +284,7 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Pessoas", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CodPostal")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EncEducacaoFK")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Escolariedade")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Identificacao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IdentificacaoTipo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Morada")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NIF")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Profissao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telemovel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TurmasId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EncEducacaoFK");
-
-                    b.HasIndex("TurmasId");
-
-                    b.ToTable("Pessoas");
-                });
-
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Turmas", b =>
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.AnosLetivos", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -347,6 +296,77 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasKey("Id");
+
+                    b.ToTable("AnosLetivos");
+                });
+
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Pessoas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Identificacao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NIF")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TipoIdentificacaoFK")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TipoIdentificacaoFK");
+
+                    b.ToTable("Pessoas");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Pessoas");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.TiposIdentificacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TiposIdentificacao");
+                });
+
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Turmas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnoLetivoFK")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -356,9 +376,108 @@ namespace Projeto_Jardim_Escola.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AnoLetivoFK");
+
                     b.HasIndex("ProfessorFK");
 
                     b.ToTable("Turmas");
+                });
+
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Alunos", b =>
+                {
+                    b.HasBaseType("Projeto_Jardim_Escola.Models.Pessoas");
+
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Foto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Genero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ResponsavelFK")
+                        .HasColumnType("int");
+
+                    b.HasIndex("ResponsavelFK");
+
+                    b.HasDiscriminator().HasValue("Alunos");
+                });
+
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Professores", b =>
+                {
+                    b.HasBaseType("Projeto_Jardim_Escola.Models.Pessoas");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("Telemovel")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
+
+                    b.HasDiscriminator().HasValue("Professores");
+                });
+
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Responsaveis", b =>
+                {
+                    b.HasBaseType("Projeto_Jardim_Escola.Models.Pessoas");
+
+                    b.Property<string>("CodPostal")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Escolaridade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Morada")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("Profissao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telemovel")
+                        .IsRequired()
+                        .HasMaxLength(14)
+                        .HasColumnType("nvarchar(14)");
+
+                    b.ToTable("Pessoas", t =>
+                        {
+                            t.Property("Email")
+                                .HasColumnName("Responsaveis_Email");
+
+                            t.Property("Telemovel")
+                                .HasColumnName("Responsaveis_Telemovel");
+                        });
+
+                    b.HasDiscriminator().HasValue("Responsaveis");
+                });
+
+            modelBuilder.Entity("AlunosTurmas", b =>
+                {
+                    b.HasOne("Projeto_Jardim_Escola.Models.Alunos", null)
+                        .WithMany()
+                        .HasForeignKey("AlunosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Projeto_Jardim_Escola.Models.Turmas", null)
+                        .WithMany()
+                        .HasForeignKey("TurmasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -414,38 +533,61 @@ namespace Projeto_Jardim_Escola.Data.Migrations
 
             modelBuilder.Entity("Projeto_Jardim_Escola.Models.Pessoas", b =>
                 {
-                    b.HasOne("Projeto_Jardim_Escola.Models.Pessoas", "EncEducacao")
-                        .WithMany("Alunos")
-                        .HasForeignKey("EncEducacaoFK")
+                    b.HasOne("Projeto_Jardim_Escola.Models.TiposIdentificacao", "TipoIdentificacao")
+                        .WithMany("Pessoas")
+                        .HasForeignKey("TipoIdentificacaoFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Projeto_Jardim_Escola.Models.Turmas", null)
-                        .WithMany("Alunos")
-                        .HasForeignKey("TurmasId");
-
-                    b.Navigation("EncEducacao");
+                    b.Navigation("TipoIdentificacao");
                 });
 
             modelBuilder.Entity("Projeto_Jardim_Escola.Models.Turmas", b =>
                 {
-                    b.HasOne("Projeto_Jardim_Escola.Models.Pessoas", "Professor")
+                    b.HasOne("Projeto_Jardim_Escola.Models.AnosLetivos", "AnoLetivo")
+                        .WithMany("Turmas")
+                        .HasForeignKey("AnoLetivoFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Projeto_Jardim_Escola.Models.Professores", "Professor")
                         .WithMany("Turmas")
                         .HasForeignKey("ProfessorFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("AnoLetivo");
+
                     b.Navigation("Professor");
                 });
 
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Pessoas", b =>
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Alunos", b =>
                 {
-                    b.Navigation("Alunos");
+                    b.HasOne("Projeto_Jardim_Escola.Models.Responsaveis", "Responsavel")
+                        .WithMany("Alunos")
+                        .HasForeignKey("ResponsavelFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
+                    b.Navigation("Responsavel");
+                });
+
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.AnosLetivos", b =>
+                {
                     b.Navigation("Turmas");
                 });
 
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Turmas", b =>
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.TiposIdentificacao", b =>
+                {
+                    b.Navigation("Pessoas");
+                });
+
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Professores", b =>
+                {
+                    b.Navigation("Turmas");
+                });
+
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Responsaveis", b =>
                 {
                     b.Navigation("Alunos");
                 });
