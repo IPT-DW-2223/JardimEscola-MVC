@@ -41,7 +41,9 @@ namespace Projeto_Jardim_Escola.Models
         /// FK para o tipo de identificação da pessoa.
         /// </summary>
         [ForeignKey(nameof(TipoIdentificacao))]
+        [Display(Name = "Tipo de Identificação")]
         public int TipoIdentificacaoFK { get; set; }
+        [Display(Name = "Tipo de Identificação")]
         public TiposIdentificacao TipoIdentificacao { get; set; }
 
     }
