@@ -12,43 +12,43 @@ namespace Projeto_Jardim_Escola.Controllers
 {
     public class ResponsaveisController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _baseDados;
 
         public ResponsaveisController(ApplicationDbContext context)
         {
-            _context = context;
+            _baseDados = context;
         }
 
         // GET: Responsaveis
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Responsaveis.Include(r => r.TipoIdentificacao);
+            var applicationDbContext = _baseDados.Responsaveis.Include(r => r.TipoIdentificacao);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Responsaveis/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Responsaveis == null)
+            if (id == null || _baseDados.Responsaveis == null)
             {
                 return NotFound();
             }
 
-            var responsaveis = await _context.Responsaveis
+            var responsavel = await _baseDados.Responsaveis
                 .Include(r => r.TipoIdentificacao)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (responsaveis == null)
+            if (responsavel == null)
             {
                 return NotFound();
             }
 
-            return View(responsaveis);
+            return View(responsavel);
         }
 
         // GET: Responsaveis/Create
         public IActionResult Create()
         {
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome");
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome");
             return View();
         }
 
@@ -61,28 +61,28 @@ namespace Projeto_Jardim_Escola.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(responsaveis);
-                await _context.SaveChangesAsync();
+                _baseDados.Add(responsaveis);
+                await _baseDados.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome", responsaveis.TipoIdentificacaoFK);
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome", responsaveis.TipoIdentificacaoFK);
             return View(responsaveis);
         }
 
         // GET: Responsaveis/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Responsaveis == null)
+            if (id == null || _baseDados.Responsaveis == null)
             {
                 return NotFound();
             }
 
-            var responsaveis = await _context.Responsaveis.FindAsync(id);
+            var responsaveis = await _baseDados.Responsaveis.FindAsync(id);
             if (responsaveis == null)
             {
                 return NotFound();
             }
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome", responsaveis.TipoIdentificacaoFK);
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome", responsaveis.TipoIdentificacaoFK);
             return View(responsaveis);
         }
 
@@ -102,8 +102,8 @@ namespace Projeto_Jardim_Escola.Controllers
             {
                 try
                 {
-                    _context.Update(responsaveis);
-                    await _context.SaveChangesAsync();
+                    _baseDados.Update(responsaveis);
+                    await _baseDados.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,19 +118,19 @@ namespace Projeto_Jardim_Escola.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome", responsaveis.TipoIdentificacaoFK);
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome", responsaveis.TipoIdentificacaoFK);
             return View(responsaveis);
         }
 
         // GET: Responsaveis/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Responsaveis == null)
+            if (id == null || _baseDados.Responsaveis == null)
             {
                 return NotFound();
             }
 
-            var responsaveis = await _context.Responsaveis
+            var responsaveis = await _baseDados.Responsaveis
                 .Include(r => r.TipoIdentificacao)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (responsaveis == null)
@@ -146,23 +146,23 @@ namespace Projeto_Jardim_Escola.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Responsaveis == null)
+            if (_baseDados.Responsaveis == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Responsaveis'  is null.");
             }
-            var responsaveis = await _context.Responsaveis.FindAsync(id);
+            var responsaveis = await _baseDados.Responsaveis.FindAsync(id);
             if (responsaveis != null)
             {
-                _context.Responsaveis.Remove(responsaveis);
+                _baseDados.Responsaveis.Remove(responsaveis);
             }
             
-            await _context.SaveChangesAsync();
+            await _baseDados.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ResponsaveisExists(int id)
         {
-          return _context.Responsaveis.Any(e => e.Id == id);
+          return _baseDados.Responsaveis.Any(e => e.Id == id);
         }
     }
 }

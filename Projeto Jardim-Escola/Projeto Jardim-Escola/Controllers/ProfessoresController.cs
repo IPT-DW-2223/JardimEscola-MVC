@@ -12,43 +12,43 @@ namespace Projeto_Jardim_Escola.Controllers
 {
     public class ProfessoresController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _baseDados;
 
         public ProfessoresController(ApplicationDbContext context)
         {
-            _context = context;
+            _baseDados = context;
         }
 
         // GET: Professores
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Professores.Include(p => p.TipoIdentificacao);
+            var applicationDbContext = _baseDados.Professores.Include(p => p.TipoIdentificacao);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Professores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Professores == null)
+            if (id == null || _baseDados.Professores == null)
             {
                 return NotFound();
             }
 
-            var professores = await _context.Professores
+            var professor = await _baseDados.Professores
                 .Include(p => p.TipoIdentificacao)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (professores == null)
+            if (professor == null)
             {
                 return NotFound();
             }
 
-            return View(professores);
+            return View(professor);
         }
 
         // GET: Professores/Create
         public IActionResult Create()
         {
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome");
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome");
             return View();
         }
 
@@ -61,28 +61,28 @@ namespace Projeto_Jardim_Escola.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(professores);
-                await _context.SaveChangesAsync();
+                _baseDados.Add(professores);
+                await _baseDados.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome", professores.TipoIdentificacaoFK);
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome", professores.TipoIdentificacaoFK);
             return View(professores);
         }
 
         // GET: Professores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Professores == null)
+            if (id == null || _baseDados.Professores == null)
             {
                 return NotFound();
             }
 
-            var professores = await _context.Professores.FindAsync(id);
+            var professores = await _baseDados.Professores.FindAsync(id);
             if (professores == null)
             {
                 return NotFound();
             }
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome", professores.TipoIdentificacaoFK);
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome", professores.TipoIdentificacaoFK);
             return View(professores);
         }
 
@@ -102,8 +102,8 @@ namespace Projeto_Jardim_Escola.Controllers
             {
                 try
                 {
-                    _context.Update(professores);
-                    await _context.SaveChangesAsync();
+                    _baseDados.Update(professores);
+                    await _baseDados.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,19 +118,19 @@ namespace Projeto_Jardim_Escola.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome", professores.TipoIdentificacaoFK);
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome", professores.TipoIdentificacaoFK);
             return View(professores);
         }
 
         // GET: Professores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Professores == null)
+            if (id == null || _baseDados.Professores == null)
             {
                 return NotFound();
             }
 
-            var professores = await _context.Professores
+            var professores = await _baseDados.Professores
                 .Include(p => p.TipoIdentificacao)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (professores == null)
@@ -146,23 +146,23 @@ namespace Projeto_Jardim_Escola.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Professores == null)
+            if (_baseDados.Professores == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Professores'  is null.");
             }
-            var professores = await _context.Professores.FindAsync(id);
+            var professores = await _baseDados.Professores.FindAsync(id);
             if (professores != null)
             {
-                _context.Professores.Remove(professores);
+                _baseDados.Professores.Remove(professores);
             }
             
-            await _context.SaveChangesAsync();
+            await _baseDados.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProfessoresExists(int id)
         {
-          return _context.Professores.Any(e => e.Id == id);
+          return _baseDados.Professores.Any(e => e.Id == id);
         }
     }
 }

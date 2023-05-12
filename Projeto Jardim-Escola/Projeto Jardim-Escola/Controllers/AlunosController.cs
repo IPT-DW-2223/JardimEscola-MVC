@@ -10,47 +10,48 @@ using Projeto_Jardim_Escola.Models;
 
 namespace Projeto_Jardim_Escola.Controllers
 {
+
     public class AlunosController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _baseDados;
 
         public AlunosController(ApplicationDbContext context)
         {
-            _context = context;
+            _baseDados = context;
         }
 
         // GET: Alunos
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Alunos.Include(a => a.TipoIdentificacao).Include(a => a.Responsavel);
+            var applicationDbContext = _baseDados.Alunos.Include(a => a.TipoIdentificacao).Include(a => a.Responsavel);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Alunos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Alunos == null)
+            if (id == null || _baseDados.Alunos == null)
             {
                 return NotFound();
             }
 
-            var alunos = await _context.Alunos
+            var aluno = await _baseDados.Alunos
                 .Include(a => a.TipoIdentificacao)
                 .Include(a => a.Responsavel)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (alunos == null)
+            if (aluno == null)
             {
                 return NotFound();
             }
 
-            return View(alunos);
+            return View(aluno);
         }
 
         // GET: Alunos/Create
         public IActionResult Create()
         {
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome");
-            ViewData["ResponsavelFK"] = new SelectList(_context.Responsaveis, "Id", "Nome");
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome");
+            ViewData["ResponsavelFK"] = new SelectList(_baseDados.Responsaveis, "Id", "Nome");
             return View();
         }
 
@@ -63,30 +64,30 @@ namespace Projeto_Jardim_Escola.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(alunos);
-                await _context.SaveChangesAsync();
+                _baseDados.Add(alunos);
+                await _baseDados.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome", alunos.TipoIdentificacaoFK);
-            ViewData["ResponsavelFK"] = new SelectList(_context.Responsaveis, "Id", "Nome", alunos.ResponsavelFK);
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome", alunos.TipoIdentificacaoFK);
+            ViewData["ResponsavelFK"] = new SelectList(_baseDados.Responsaveis, "Id", "Nome", alunos.ResponsavelFK);
             return View(alunos);
         }
 
         // GET: Alunos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Alunos == null)
+            if (id == null || _baseDados.Alunos == null)
             {
                 return NotFound();
             }
 
-            var alunos = await _context.Alunos.FindAsync(id);
+            var alunos = await _baseDados.Alunos.FindAsync(id);
             if (alunos == null)
             {
                 return NotFound();
             }
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome", alunos.TipoIdentificacaoFK);
-            ViewData["ResponsavelFK"] = new SelectList(_context.Responsaveis, "Id", "Nome", alunos.ResponsavelFK);
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome", alunos.TipoIdentificacaoFK);
+            ViewData["ResponsavelFK"] = new SelectList(_baseDados.Responsaveis, "Id", "Nome", alunos.ResponsavelFK);
             return View(alunos);
         }
 
@@ -106,8 +107,8 @@ namespace Projeto_Jardim_Escola.Controllers
             {
                 try
                 {
-                    _context.Update(alunos);
-                    await _context.SaveChangesAsync();
+                    _baseDados.Update(alunos);
+                    await _baseDados.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,20 +123,20 @@ namespace Projeto_Jardim_Escola.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoIdentificacaoFK"] = new SelectList(_context.TiposIdentificacao, "Id", "Nome", alunos.TipoIdentificacaoFK);
-            ViewData["ResponsavelFK"] = new SelectList(_context.Responsaveis, "Id", "Nome", alunos.ResponsavelFK);
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome", alunos.TipoIdentificacaoFK);
+            ViewData["ResponsavelFK"] = new SelectList(_baseDados.Responsaveis, "Id", "Nome", alunos.ResponsavelFK);
             return View(alunos);
         }
 
         // GET: Alunos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Alunos == null)
+            if (id == null || _baseDados.Alunos == null)
             {
                 return NotFound();
             }
 
-            var alunos = await _context.Alunos
+            var alunos = await _baseDados.Alunos
                 .Include(a => a.TipoIdentificacao)
                 .Include(a => a.Responsavel)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -152,23 +153,23 @@ namespace Projeto_Jardim_Escola.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Alunos == null)
+            if (_baseDados.Alunos == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Alunos'  is null.");
             }
-            var alunos = await _context.Alunos.FindAsync(id);
+            var alunos = await _baseDados.Alunos.FindAsync(id);
             if (alunos != null)
             {
-                _context.Alunos.Remove(alunos);
+                _baseDados.Alunos.Remove(alunos);
             }
             
-            await _context.SaveChangesAsync();
+            await _baseDados.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AlunosExists(int id)
         {
-          return _context.Alunos.Any(e => e.Id == id);
+          return _baseDados.Alunos.Any(e => e.Id == id);
         }
     }
 }

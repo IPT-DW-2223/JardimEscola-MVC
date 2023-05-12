@@ -12,35 +12,35 @@ namespace Projeto_Jardim_Escola.Controllers
 {
     public class AnosLetivosController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _baseDados;
 
         public AnosLetivosController(ApplicationDbContext context)
         {
-            _context = context;
+            _baseDados = context;
         }
 
         // GET: AnosLetivos
         public async Task<IActionResult> Index()
         {
-              return View(await _context.AnosLetivos.ToListAsync());
+              return View(await _baseDados.AnosLetivos.ToListAsync());
         }
 
         // GET: AnosLetivos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.AnosLetivos == null)
+            if (id == null || _baseDados.AnosLetivos == null)
             {
                 return NotFound();
             }
 
-            var anosLetivos = await _context.AnosLetivos
+            var anoLetivo = await _baseDados.AnosLetivos
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (anosLetivos == null)
+            if (anoLetivo == null)
             {
                 return NotFound();
             }
 
-            return View(anosLetivos);
+            return View(anoLetivo);
         }
 
         // GET: AnosLetivos/Create
@@ -58,8 +58,8 @@ namespace Projeto_Jardim_Escola.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(anosLetivos);
-                await _context.SaveChangesAsync();
+                _baseDados.Add(anosLetivos);
+                await _baseDados.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(anosLetivos);
@@ -68,12 +68,12 @@ namespace Projeto_Jardim_Escola.Controllers
         // GET: AnosLetivos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.AnosLetivos == null)
+            if (id == null || _baseDados.AnosLetivos == null)
             {
                 return NotFound();
             }
 
-            var anosLetivos = await _context.AnosLetivos.FindAsync(id);
+            var anosLetivos = await _baseDados.AnosLetivos.FindAsync(id);
             if (anosLetivos == null)
             {
                 return NotFound();
@@ -97,8 +97,8 @@ namespace Projeto_Jardim_Escola.Controllers
             {
                 try
                 {
-                    _context.Update(anosLetivos);
-                    await _context.SaveChangesAsync();
+                    _baseDados.Update(anosLetivos);
+                    await _baseDados.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,12 +119,12 @@ namespace Projeto_Jardim_Escola.Controllers
         // GET: AnosLetivos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.AnosLetivos == null)
+            if (id == null || _baseDados.AnosLetivos == null)
             {
                 return NotFound();
             }
 
-            var anosLetivos = await _context.AnosLetivos
+            var anosLetivos = await _baseDados.AnosLetivos
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (anosLetivos == null)
             {
@@ -139,23 +139,23 @@ namespace Projeto_Jardim_Escola.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.AnosLetivos == null)
+            if (_baseDados.AnosLetivos == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.AnosLetivos'  is null.");
             }
-            var anosLetivos = await _context.AnosLetivos.FindAsync(id);
+            var anosLetivos = await _baseDados.AnosLetivos.FindAsync(id);
             if (anosLetivos != null)
             {
-                _context.AnosLetivos.Remove(anosLetivos);
+                _baseDados.AnosLetivos.Remove(anosLetivos);
             }
             
-            await _context.SaveChangesAsync();
+            await _baseDados.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AnosLetivosExists(int id)
         {
-          return _context.AnosLetivos.Any(e => e.Id == id);
+          return _baseDados.AnosLetivos.Any(e => e.Id == id);
         }
     }
 }

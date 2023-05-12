@@ -12,35 +12,35 @@ namespace Projeto_Jardim_Escola.Controllers
 {
     public class TiposIdentificacoesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _baseDados;
 
         public TiposIdentificacoesController(ApplicationDbContext context)
         {
-            _context = context;
+            _baseDados = context;
         }
 
         // GET: TiposIdentificacoes
         public async Task<IActionResult> Index()
         {
-              return View(await _context.TiposIdentificacao.ToListAsync());
+              return View(await _baseDados.TiposIdentificacao.ToListAsync());
         }
 
         // GET: TiposIdentificacoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TiposIdentificacao == null)
+            if (id == null || _baseDados.TiposIdentificacao == null)
             {
                 return NotFound();
             }
 
-            var tiposIdentificacao = await _context.TiposIdentificacao
+            var tipoIdentificacao = await _baseDados.TiposIdentificacao
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (tiposIdentificacao == null)
+            if (tipoIdentificacao == null)
             {
                 return NotFound();
             }
 
-            return View(tiposIdentificacao);
+            return View(tipoIdentificacao);
         }
 
         // GET: TiposIdentificacoes/Create
@@ -58,8 +58,8 @@ namespace Projeto_Jardim_Escola.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tiposIdentificacao);
-                await _context.SaveChangesAsync();
+                _baseDados.Add(tiposIdentificacao);
+                await _baseDados.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(tiposIdentificacao);
@@ -68,12 +68,12 @@ namespace Projeto_Jardim_Escola.Controllers
         // GET: TiposIdentificacoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TiposIdentificacao == null)
+            if (id == null || _baseDados.TiposIdentificacao == null)
             {
                 return NotFound();
             }
 
-            var tiposIdentificacao = await _context.TiposIdentificacao.FindAsync(id);
+            var tiposIdentificacao = await _baseDados.TiposIdentificacao.FindAsync(id);
             if (tiposIdentificacao == null)
             {
                 return NotFound();
@@ -97,8 +97,8 @@ namespace Projeto_Jardim_Escola.Controllers
             {
                 try
                 {
-                    _context.Update(tiposIdentificacao);
-                    await _context.SaveChangesAsync();
+                    _baseDados.Update(tiposIdentificacao);
+                    await _baseDados.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,12 +119,12 @@ namespace Projeto_Jardim_Escola.Controllers
         // GET: TiposIdentificacoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TiposIdentificacao == null)
+            if (id == null || _baseDados.TiposIdentificacao == null)
             {
                 return NotFound();
             }
 
-            var tiposIdentificacao = await _context.TiposIdentificacao
+            var tiposIdentificacao = await _baseDados.TiposIdentificacao
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tiposIdentificacao == null)
             {
@@ -139,23 +139,23 @@ namespace Projeto_Jardim_Escola.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TiposIdentificacao == null)
+            if (_baseDados.TiposIdentificacao == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.TiposIdentificacao'  is null.");
             }
-            var tiposIdentificacao = await _context.TiposIdentificacao.FindAsync(id);
+            var tiposIdentificacao = await _baseDados.TiposIdentificacao.FindAsync(id);
             if (tiposIdentificacao != null)
             {
-                _context.TiposIdentificacao.Remove(tiposIdentificacao);
+                _baseDados.TiposIdentificacao.Remove(tiposIdentificacao);
             }
             
-            await _context.SaveChangesAsync();
+            await _baseDados.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TiposIdentificacaoExists(int id)
         {
-          return _context.TiposIdentificacao.Any(e => e.Id == id);
+          return _baseDados.TiposIdentificacao.Any(e => e.Id == id);
         }
     }
 }

@@ -12,45 +12,45 @@ namespace Projeto_Jardim_Escola.Controllers
 {
     public class TurmasController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _baseDados;
 
         public TurmasController(ApplicationDbContext context)
         {
-            _context = context;
+            _baseDados = context;
         }
 
         // GET: Turmas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Turmas.Include(t => t.AnoLetivo).Include(t => t.Professor);
+            var applicationDbContext = _baseDados.Turmas.Include(t => t.AnoLetivo).Include(t => t.Professor);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Turmas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Turmas == null)
+            if (id == null || _baseDados.Turmas == null)
             {
                 return NotFound();
             }
 
-            var turmas = await _context.Turmas
+            var turma = await _baseDados.Turmas
                 .Include(t => t.AnoLetivo)
                 .Include(t => t.Professor)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (turmas == null)
+            if (turma == null)
             {
                 return NotFound();
             }
 
-            return View(turmas);
+            return View(turma);
         }
 
         // GET: Turmas/Create
         public IActionResult Create()
         {
-            ViewData["AnoLetivoFK"] = new SelectList(_context.AnosLetivos, "Id", "AnoLetivo");
-            ViewData["ProfessorFK"] = new SelectList(_context.Professores, "Id", "Nome");
+            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo");
+            ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome");
             return View();
         }
 
@@ -63,30 +63,30 @@ namespace Projeto_Jardim_Escola.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(turmas);
-                await _context.SaveChangesAsync();
+                _baseDados.Add(turmas);
+                await _baseDados.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnoLetivoFK"] = new SelectList(_context.AnosLetivos, "Id", "AnoLetivo", turmas.AnoLetivoFK);
-            ViewData["ProfessorFK"] = new SelectList(_context.Professores, "Id", "Nome", turmas.ProfessorFK);
+            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo", turmas.AnoLetivoFK);
+            ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome", turmas.ProfessorFK);
             return View(turmas);
         }
 
         // GET: Turmas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Turmas == null)
+            if (id == null || _baseDados.Turmas == null)
             {
                 return NotFound();
             }
 
-            var turmas = await _context.Turmas.FindAsync(id);
+            var turmas = await _baseDados.Turmas.FindAsync(id);
             if (turmas == null)
             {
                 return NotFound();
             }
-            ViewData["AnoLetivoFK"] = new SelectList(_context.AnosLetivos, "Id", "AnoLetivo", turmas.AnoLetivoFK);
-            ViewData["ProfessorFK"] = new SelectList(_context.Professores, "Id", "Nome", turmas.ProfessorFK);
+            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo", turmas.AnoLetivoFK);
+            ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome", turmas.ProfessorFK);
             return View(turmas);
         }
 
@@ -106,8 +106,8 @@ namespace Projeto_Jardim_Escola.Controllers
             {
                 try
                 {
-                    _context.Update(turmas);
-                    await _context.SaveChangesAsync();
+                    _baseDados.Update(turmas);
+                    await _baseDados.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,20 +122,20 @@ namespace Projeto_Jardim_Escola.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnoLetivoFK"] = new SelectList(_context.AnosLetivos, "Id", "AnoLetivo", turmas.AnoLetivoFK);
-            ViewData["ProfessorFK"] = new SelectList(_context.Professores, "Id", "Nome", turmas.ProfessorFK);
+            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo", turmas.AnoLetivoFK);
+            ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome", turmas.ProfessorFK);
             return View(turmas);
         }
 
         // GET: Turmas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Turmas == null)
+            if (id == null || _baseDados.Turmas == null)
             {
                 return NotFound();
             }
 
-            var turmas = await _context.Turmas
+            var turmas = await _baseDados.Turmas
                 .Include(t => t.AnoLetivo)
                 .Include(t => t.Professor)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -152,23 +152,23 @@ namespace Projeto_Jardim_Escola.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Turmas == null)
+            if (_baseDados.Turmas == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Turmas'  is null.");
             }
-            var turmas = await _context.Turmas.FindAsync(id);
+            var turmas = await _baseDados.Turmas.FindAsync(id);
             if (turmas != null)
             {
-                _context.Turmas.Remove(turmas);
+                _baseDados.Turmas.Remove(turmas);
             }
             
-            await _context.SaveChangesAsync();
+            await _baseDados.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TurmasExists(int id)
         {
-          return _context.Turmas.Any(e => e.Id == id);
+          return _baseDados.Turmas.Any(e => e.Id == id);
         }
     }
 }
