@@ -1,58 +1,95 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Projeto_Jardim_Escola</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Projeto_Jardim_Escola.styles.css" asp-append-version="true" />
-</head>
-<body>
+    @if (User.Identity.IsAuthenticated) {
+
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>@ViewData["Title"] - Projeto_Jardim_Escola</title>
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+            <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+            <link rel="stylesheet" href="~/Projeto_Jardim_Escola.styles.css" asp-append-version="true" />
+        </head>
+        <body>
     
-    @* ***** CABEÇALHO ***** *@
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    @*<img src="Icons/Escola_Logo.png" alt="Projeto Jardim Escola" height="80" width="80">*@
-                    <img src="https://img.icons8.com/clouds/100/null/child-safe-zone.png" height="40" />
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Início</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
+            @* ***** CABEÇALHO ***** *@
+            <header>
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                            @*<img src="Icons/Escola_Logo.png" alt="Projeto Jardim Escola" height="80" width="80">*@
+                            <img src="https://img.icons8.com/clouds/100/null/child-safe-zone.png" height="40" />
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Início</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
+                                </li>
+                            </ul>
+                            <partial name="_LoginPartial" />
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+            @* ***** CONTAINER ***** *@
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
             </div>
-        </nav>
-    </header>
 
-    @* ***** CONTAINER ***** *@
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            @* ***** RODAPÉ ***** *@
+            <footer class="border-top footer text-muted bg-primary" style="position: fixed; bottom: 0; width: 100%; background-color: #f5f5f5; padding: 10px; text-align: center;">
+                <div class="container text-white">
+                    <p>Projeto desenvolvido no âmbito da U.C. de Desenvolvimento Web de Licenciatura em Engenharia Informática. Ano letivo 2022-23</p>
+                </div>
+            </footer>
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+            @await RenderSectionAsync("Scripts", required: false)
+        </body>
 
-    @* ***** RODAPÉ ***** *@
-    <footer class="border-top footer text-muted" style="position: fixed; bottom: 0; width: 100%; background-color: #f5f5f5; padding: 10px; text-align: center;">
-        <div class="container">
-            <p>Projeto desenvolvido no âmbito da U.C. de Desenvolvimento Web de Licenciatura em Engenharia Informática. Ano letivo 2022-23</p>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+    } else {
+
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>@ViewData["Title"] - Projeto_Jardim_Escola</title>
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+            <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+            <link rel="stylesheet" href="~/Projeto_Jardim_Escola.styles.css" asp-append-version="true" />
+        </head>
+        <body>
+
+            @* ***** CONTAINER ***** *@
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+
+            @* ***** RODAPÉ ***** *@
+            <footer class="border-top footer text-muted bg-primary" style="position: fixed; bottom: 0; width: 100%; background-color: #f5f5f5; padding: 10px; text-align: center;">
+                <div class="container text-white">
+                    <p>Projeto desenvolvido no âmbito da U.C. de Desenvolvimento Web de Licenciatura em Engenharia Informática. Ano letivo 2022-23</p>
+                </div>
+            </footer>
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+            @await RenderSectionAsync("Scripts", required: false)
+        </body>
+
+    }
+
+
 </html>
