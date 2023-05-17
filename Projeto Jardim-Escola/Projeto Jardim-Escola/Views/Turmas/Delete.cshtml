@@ -8,7 +8,7 @@
 
 <h3>Tem a certeza que deseja eliminar este registo?</h3>
 <div>
-    <h4>Turmas</h4>
+    <h4>Turma</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -18,7 +18,8 @@
             @Html.DisplayFor(model => model.Nome)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AnoLetivo)
+            Ano letivo
+            @*@Html.DisplayNameFor(model => model.AnoLetivo)*@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.AnoLetivo.AnoLetivo)
@@ -27,7 +28,7 @@
             @Html.DisplayNameFor(model => model.Professor)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Professor.Id)
+            @Html.DisplayFor(model => model.Professor.Nome)
         </dd>
     </dl>
     

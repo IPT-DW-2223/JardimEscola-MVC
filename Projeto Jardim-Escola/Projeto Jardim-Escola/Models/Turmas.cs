@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Projeto_Jardim_Escola.Models {
@@ -33,6 +34,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// FK para o ano letivo da turma.
         /// </summary>
         [ForeignKey(nameof(AnoLetivo))]
+        [Display(Name = "Ano letivo")]
         public int AnoLetivoFK { get; set; }
         public AnosLetivos AnoLetivo { get; set; }
 
@@ -40,6 +42,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// FK para o professor da turma.
         /// </summary>
         [ForeignKey(nameof(Professor))]
+        [Display(Name = "Professor")]
         public int ProfessorFK { get; set; }
         public Professores Professor { get; set; }
 
