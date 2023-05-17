@@ -31,6 +31,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// <summary>
         /// Diretoria da foto do aluno.
         /// </summary>
+        [Display(Name = "Fotografia")]
         public string Foto { get; set; }
 
         // ---------------------------------------------------------------------------------------- //
@@ -41,6 +42,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// FK para o responsável do aluno.
         /// </summary>
         [ForeignKey(nameof(Responsavel))]
+        [Display(Name ="Responsável")]
         public int ResponsavelFK { get; set; }
         public Responsaveis Responsavel { get; set; }
 

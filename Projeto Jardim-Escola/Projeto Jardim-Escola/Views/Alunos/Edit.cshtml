@@ -13,6 +13,11 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="DataNascimento" class="control-label"></label>
                 <input asp-for="DataNascimento" class="form-control" />
                 <span asp-validation-for="DataNascimento" class="text-danger"></span>
@@ -22,11 +27,7 @@
                 <input asp-for="Genero" class="form-control" />
                 <span asp-validation-for="Genero" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Foto" class="control-label"></label>
-                <input asp-for="Foto" class="form-control" />
-                <span asp-validation-for="Foto" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <label asp-for="ResponsavelFK" class="control-label"></label>
                 <select asp-for="ResponsavelFK" class="form-control" asp-items="ViewBag.ResponsavelFK"></select>
@@ -34,9 +35,9 @@
             </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+                <label asp-for="TipoIdentificacaoFK" class="control-label"></label>
+                <select asp-for="TipoIdentificacaoFK" class="form-control" asp-items="ViewBag.TipoIdentificacaoFK"></select>
+                <span asp-validation-for="TipoIdentificacaoFK" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Identificacao" class="control-label"></label>
@@ -49,9 +50,9 @@
                 <span asp-validation-for="NIF" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TipoIdentificacaoFK" class="control-label"></label>
-                <select asp-for="TipoIdentificacaoFK" class="form-control" asp-items="ViewBag.TipoIdentificacaoFK"></select>
-                <span asp-validation-for="TipoIdentificacaoFK" class="text-danger"></span>
+                <label asp-for="Foto" class="control-label"></label>
+                <input asp-for="Foto" class="form-control" />
+                <span asp-validation-for="Foto" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
