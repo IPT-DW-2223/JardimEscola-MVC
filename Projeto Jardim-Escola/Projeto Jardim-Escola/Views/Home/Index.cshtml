@@ -20,18 +20,18 @@
 <!-- Secção dos cards -->
 <div class="row row-cols-1 row-cols-md-4 g-4">
 
-    <!-- Card #1 Alunos -->
-    <div class="col">
-        <div class="card" style="width: 18rem;">
+        <!-- Card #1 Alunos -->
+        <div class="col">
+            <div class="card" style="width: 18rem;">
             <img height="176" src="/Icons/HomeCriancas.jpg" class="card-img-top" alt="O(s) meu(s) filho(s)">
             <div class="card-body">
-                <h5 class="card-title">Acompanhar os meus alunos</h5>
-                <p class="card-text">Se pretende gerenciar ou acompanhar os filhos, clique no botão para ser redirecionado.</p>
-                <a href="#" class="btn btn-primary">Ver alunos</a>
+                <h5 class="card-title">Acompanhar os meus educandos</h5>
+                <p class="card-text">Se pretende acompanhar os educandos associados a si, clique no botão para ser redirecionado.</p>
+                <a href="#" class="btn btn-primary">Ver educandos</a>
             </div>
         </div>
     </div>
-    
+
     <!-- Card #2 Turmas -->
     <div class="col">
         <div class="card" style="width: 18rem;">
@@ -45,28 +45,29 @@
     </div>
 
     <!-- Card #3 Gestão -->
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img height="200" src="/Icons/HomeGestao.png" class="card-img-top" alt="O(s) meu(s) filho(s)">
-            <div class="card-body">
-                <h5 class="card-title">Gerir alunos e turmas</h5>
-                <p class="card-text">Se pretende gerenciar alunos, turmas, professores e contas, clique no botão para ser redirecionado.</p>
-                <a href="#" class="btn btn-primary">Gerenciar app</a>
+    @if (User.IsInRole("Admin")) {
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img height="200" src="/Icons/HomeGestao.png" class="card-img-top" alt="O(s) meu(s) filho(s)">
+                <div class="card-body">
+                    <h5 class="card-title">Gerir alunos e turmas</h5>
+                    <p class="card-text">Se pretende gerenciar alunos, turmas, professores e contas, clique no botão para ser redirecionado.</p>
+                    <a href="#" class="btn btn-primary">Gerenciar app</a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Card #3 Criação de Contas -->
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img height="200" src="/Icons/HomeContas.png" class="card-img-top" alt="O(s) meu(s) filho(s)">
-            <div class="card-body">
-                <h5 class="card-title">Criar contas</h5>
-                <p class="card-text">Se pretende criar uma nova conta, clique no botão para ser redirecionado.</p>
-                <a href="#" class="btn btn-primary">Criar conta</a>
+        <!-- Card #3 Criação de Contas -->
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img height="200" src="/Icons/HomeContas.png" class="card-img-top" alt="O(s) meu(s) filho(s)">
+                <div class="card-body">
+                    <h5 class="card-title">Criar contas</h5>
+                    <p class="card-text">Se pretende criar uma nova conta, clique no botão para ser redirecionado.</p>
+                    <a href="#" class="btn btn-primary">Criar conta</a>
+                </div>
             </div>
         </div>
-    </div>
-
+    }
 </div>
 

@@ -1,3 +1,5 @@
+
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Projeto_Jardim_Escola.Data;
@@ -5,13 +7,34 @@ using Projeto_Jardim_Escola.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+/**
+ * Declarar a existência da base de dados.
+ */
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+/**
+ * Declarar a existência do serviço de Autenticação
+ *  e declaração da classe com os dados do utilizador registado.
+ */
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>() // Adiciona a capacidade da app de identificar 'perfis' de utilizador.
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+/**
+ * Declarar o serviço das variáveis de sessão.
+ */
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options => {
+    options.IdleTimeout = TimeSpan.FromSeconds(120);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+}
+);
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -32,6 +55,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Usar o serviço das variáveis de sessão.
+app.UseSession();
 
 app.UseAuthorization();
 
