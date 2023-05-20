@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 /**
- * Declarar a existência da base de dados.
+ * Declarar a existÃªncia da base de dados.
  */
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -17,15 +17,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 /**
- * Declarar a existência do serviço de Autenticação
- *  e declaração da classe com os dados do utilizador registado.
+ * Declarar a existÃªncia do serviÃ§o de AutenticaÃ§Ã£o
+ *  e declaraÃ§Ã£o da classe com os dados do utilizador registado.
  */
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>() // Adiciona a capacidade da app de identificar 'perfis' de utilizador.
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 /**
- * Declarar o serviço das variáveis de sessão.
+ * Declarar o serviÃ£o das variÃ¡veis de sessÃ£o.
  */
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => {
@@ -56,7 +56,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Usar o serviço das variáveis de sessão.
+// Usar o serviï¿½o das variï¿½veis de sessï¿½o.
 app.UseSession();
 
 app.UseAuthorization();

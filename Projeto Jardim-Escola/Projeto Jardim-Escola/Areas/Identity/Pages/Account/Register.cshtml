@@ -1,0 +1,90 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Criar Conta";
+}
+
+<div class="row">
+
+    <div class="col-md-6">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <legend class="text-center">Criar uma nova conta. <span class="req"><small>* de preenchimento obrigatório</small></span></legend>
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <hr />
+
+            @* Ler os dados do Responsável *@
+
+            @* --------------- NOME --------------- *@
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Responsaveis.Nome" class="form-control" autocomplete="username" aria-required="true" placeholder="nome" />
+                <label asp-for="Input.Responsaveis.Nome">* Nome</label>
+                <span asp-validation-for="Input.Responsaveis.Nome" class="text-danger"></span>
+            </div>
+
+            @* ------------- TELEMÓVEL ------------ *@
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Responsaveis.Telemovel" class="form-control" autocomplete="username" aria-required="true" placeholder="telemóvel" />
+                <label asp-for="Input.Responsaveis.Telemovel">* Telemóvel</label>
+                <span asp-validation-for="Input.Responsaveis.Telemovel" class="text-danger"></span>
+            </div>
+
+            @* -------------- MORADA -------------- *@
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Responsaveis.Morada" class="form-control" autocomplete="username" aria-required="true" placeholder="morada" />
+                <label asp-for="Input.Responsaveis.Morada">* Morada</label>
+                <span asp-validation-for="Input.Responsaveis.Morada" class="text-danger"></span>
+            </div>
+
+            @* ----------- CÓDIGO POSTAL ---------- *@
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Responsaveis.CodPostal" class="form-control" autocomplete="username" aria-required="true" placeholder="código postal" />
+                <label asp-for="Input.Responsaveis.CodPostal">* Código Postal</label>
+                <span asp-validation-for="Input.Responsaveis.CodPostal" class="text-danger"></span>
+            </div>
+
+            @* ----------- ESCOLARIEDADE ----------- *@
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Responsaveis.Escolaridade" class="form-control" autocomplete="username" aria-required="true" placeholder="escolaridade" />
+                <label asp-for="Input.Responsaveis.Escolaridade">* Escolaridade</label>
+                <span asp-validation-for="Input.Responsaveis.Escolaridade" class="text-danger"></span>
+            </div>
+
+            @* ------------- PROFISSÃO ------------- *@
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Responsaveis.Profissao" class="form-control" autocomplete="username" aria-required="true" placeholder="profissão" />
+                <label asp-for="Input.Responsaveis.Profissao">* Profissão</label>
+                <span asp-validation-for="Input.Responsaveis.Profissao" class="text-danger"></span>
+            </div>
+
+            <hr />
+
+            @* --------------- EMAIL --------------- *@
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.Email">* Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            @* -------------- PASSWORD ------------- *@
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label asp-for="Input.Password">* Password</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            @* -------- CONFIRMAR PASSWORD --------- *@
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label asp-for="Input.ConfirmPassword">* Confirmar Password</label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registar Conta</button>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
