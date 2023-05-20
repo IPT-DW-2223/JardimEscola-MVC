@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +14,16 @@ namespace Projeto_Jardim_Escola.Controllers
 
     public class AlunosController : Controller
     {
+        // Criar uma instância de acesso à base de dados.
         private readonly ApplicationDbContext _baseDados;
 
-        public AlunosController(ApplicationDbContext context)
+        // Variável que vai conter os dados do servidor.
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public AlunosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _baseDados = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Alunos
@@ -62,10 +68,53 @@ namespace Projeto_Jardim_Escola.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DataNascimento,Genero,Foto,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos, IFormFile fotografia)
         {
+
+            // Verifica se foi introduzida alguma foto.
+            if (fotografia == null) {
+                alunos.Foto = "semfoto.jpg";
+            } else {
+                // Verifica se é ficheiro ou imagem.
+                if (!(fotografia.ContentType == "image/png" || fotografia.ContentType == "image/jpeg")) {
+                    // Se não for imagem mostra erro.
+                    ModelState.AddModelError("", "Por favor, adicione um ficheiro .png ou .jpg");
+                    // Devolve o controlo da app à View.
+                    return View(alunos);
+                } else {
+                    // Se for imagem define o nome da foto.
+                    Guid guid = Guid.NewGuid();
+                    string nomeFoto = alunos.Nome + "_" + guid.ToString();
+                    string extensaoFoto = Path.GetExtension(fotografia.FileName).ToLower();
+                    nomeFoto += extensaoFoto;
+                    // Atribuir ao aluno o nome da sua foto.
+                    alunos.Foto = nomeFoto;
+                }
+            }
+
             if (ModelState.IsValid)
             {
+                // Adiciona os dados à base de dados.
                 _baseDados.Add(alunos);
+
+                // Sincroniza os dados.
                 await _baseDados.SaveChangesAsync();
+
+                // Guarda o ficheiro da fotografia.
+                if (fotografia != null) {
+                    // Criar um caminho para o ficheiro.
+                    string nomeLocalFicheiro = _webHostEnvironment.WebRootPath;
+                    nomeLocalFicheiro = Path.Combine(nomeLocalFicheiro, "Fotos");
+                    // Verifica se a pasta "Fotos" existe no projeto, se não existir, cria-a.
+                    if (!Directory.Exists(nomeLocalFicheiro)) {
+                        Directory.CreateDirectory(nomeLocalFicheiro);
+                    }
+                    // Nome do documento a guardar.
+                    string nomeDaFoto = Path.Combine(nomeLocalFicheiro, alunos.Foto);
+                    // Cria o objeto que vai manipular o ficheiro.
+                    using var stream = new FileStream(nomeDaFoto, FileMode.Create);
+                    // Guarda o ficheiro no disco rígido.
+                    await fotografia.CopyToAsync(stream);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome", alunos.TipoIdentificacaoFK);
