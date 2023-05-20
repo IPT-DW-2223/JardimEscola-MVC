@@ -4,12 +4,18 @@
     ViewData["Title"] = "Alunos";
 }
 
-<h2>ALUNOS</h2>
+<h3>Lista de alunos da escola</h3>
+@*<hr />*@
+<br />
 
-<p>
-    <a asp-action="Create">Adicionar aluno</a>
-</p>
-<table class="table">
+@if(User.IsInRole("Admin")) {
+    <a asp-controller="Alunos" asp-action="Create" type="submit" class="btn btn-primary btn-sm">Adicionar aluno</a>
+    @*<hr />*@
+    <div><br /></div>
+}
+
+@*<table class="table table-hover table-bordered border-primary table-striped">*@
+<table class="table table-hover table-striped">
     <thead>
         <tr>
             <th>
@@ -68,9 +74,9 @@
                     @Html.DisplayFor(modelItem => item.Foto)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                    <a class="btn btn-warning btn-sm btn-outline-light" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                    <a class="btn btn-info btn-sm btn-outline-light" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                    <a class="btn btn-danger btn-sm btn-outline-light" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
                 </td>
             </tr>
         }

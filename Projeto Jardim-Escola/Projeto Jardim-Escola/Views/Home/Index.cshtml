@@ -11,8 +11,10 @@
 
 <div>
     <h3>Que bom te ver, @User.Identity.Name!</h3>
-    <button type="button" class="btn btn-outline-primary">Definições da conta</button>
-    <button type="button" class="btn btn-outline-danger">Terminar sessão</button>
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button type="button" class="btn btn-outline-primary">Definições da conta</button>
+        <button type="submit" class="btn btn-outline-danger">Terminar sessão</button>
+    </form>
 </div>
 
 <hr />
