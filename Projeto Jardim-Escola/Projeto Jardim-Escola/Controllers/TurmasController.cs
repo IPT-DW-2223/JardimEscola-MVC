@@ -49,8 +49,13 @@ namespace Projeto_Jardim_Escola.Controllers
         // GET: Turmas/Create
         public IActionResult Create()
         {
+            // var auxiliar
+            //int idAnoLetivo = 3;  // 3=2022/2023, por exemplo
+
+
             ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo");
             ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome");
+            //ViewData["ListaAlunos"] = _baseDados.Alunos.Where(a =>(a.Ativo)&& (a.Turmas.Any(t => t.AnoLetivoFK != idAnoLetivo)));
             return View();
         }
 

@@ -68,7 +68,7 @@ namespace Projeto_Jardim_Escola.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DataNascimento,Genero,Foto,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos, IFormFile fotografia)
         {
-
+            // TODO: Adicionar o atributo Ativo aos alunos.
             // Verifica se foi introduzida alguma foto.
             if (fotografia == null) {
                 alunos.Foto = "semfoto.jpg";
@@ -147,6 +147,7 @@ namespace Projeto_Jardim_Escola.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos)
         {
+            // TODO: Adicionar o atributo Ativo aos alunos.
             if (id != alunos.Id)
             {
                 return NotFound();

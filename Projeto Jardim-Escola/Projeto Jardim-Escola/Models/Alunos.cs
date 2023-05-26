@@ -34,6 +34,12 @@ namespace Projeto_Jardim_Escola.Models {
         [Display(Name = "Fotografia")]
         public string Foto { get; set; }
 
+        /// <summary>
+        /// Identifica se o aluno está ativo ou não.
+        /// True - Ativo; False - Não ativo.
+        /// </summary>
+        public bool Ativo { get; set; }
+
         // ---------------------------------------------------------------------------------------- //
         // ----- [Chaves Estrangeiras] ------------------------------------------------------------ //
         // ---------------------------------------------------------------------------------------- //

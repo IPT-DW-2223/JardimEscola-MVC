@@ -52,7 +52,8 @@
                 <label asp-for="ResponsavelFK" class="control-label"></label>
                 <select asp-for="ResponsavelFK" class="form-control" asp-items="ViewBag.ResponsavelFK"></select>
                 <span asp-validation-for="ResponsavelFK" class="text-danger"></span>
-            </div>  
+            </div>
+            @* TODO: Adicionar o atributo Ativo aos alunos.*@
             <div class="form-group">
                 <input type="submit" value="Guardar alterações" class="btn btn-primary" />
             </div>
