@@ -66,9 +66,8 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DataNascimento,Genero,Foto,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos, IFormFile fotografia)
+        public async Task<IActionResult> Create([Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos, IFormFile fotografia)
         {
-            // TODO: Adicionar o atributo Ativo aos alunos.
             // Verifica se foi introduzida alguma foto.
             if (fotografia == null) {
                 alunos.Foto = "semfoto.jpg";
@@ -92,6 +91,9 @@ namespace Projeto_Jardim_Escola.Controllers
 
             if (ModelState.IsValid)
             {
+                // Por pré-definição, o novo aluno estará sempre no estado 'ativo'.
+                alunos.Ativo = true;
+
                 // Adiciona os dados à base de dados.
                 _baseDados.Add(alunos);
 
@@ -145,9 +147,8 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos)
+        public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos)
         {
-            // TODO: Adicionar o atributo Ativo aos alunos.
             if (id != alunos.Id)
             {
                 return NotFound();
