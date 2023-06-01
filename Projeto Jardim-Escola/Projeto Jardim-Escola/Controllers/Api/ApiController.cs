@@ -7,19 +7,20 @@ using Projeto_Jardim_Escola.Models;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Projeto_Jardim_Escola.Controllers.Api {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    public class AlunosApiController : ControllerBase {
+    public class ApiController : ControllerBase {
 
         private readonly ApplicationDbContext _baseDados;
 
-        public AlunosApiController(ApplicationDbContext baseDados) { _baseDados = baseDados; }
+        public ApiController(ApplicationDbContext baseDados) { _baseDados = baseDados; }
 
         /// <summary>
-        /// GET: api/AlunosAPI
+        /// GET: Api/Alunos
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Route("Alunos")]
         public async Task<ActionResult<IEnumerable<AlunoViewModel>>> GetAlunos() {
             return await _baseDados.Alunos
                 .Include(a => a.Responsavel)

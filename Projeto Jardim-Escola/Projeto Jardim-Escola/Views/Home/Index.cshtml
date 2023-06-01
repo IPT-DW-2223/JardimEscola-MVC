@@ -4,7 +4,7 @@
 
 <!-- Mensagem em destaque de informação sobre a aplicação -->
 <div class="alert alert-primary" role="alert">
-    Gestor de uma jardim-escola. Este projeto foi desenvolvido no âmbito da U.C. de Desenvolvimento Web do curso de Engenharia Informática do IPTomar.
+    Gestor de um jardim-escola. Este projeto foi desenvolvido no âmbito da U.C. de Desenvolvimento Web do curso de Engenharia Informática do IPTomar.
 </div>
 
 <br />
@@ -35,30 +35,22 @@
     </div>
 
     <!-- Card #2 Turmas -->
-    <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img height="200" src="/Icons/turmas.gif" class="card-img-top" alt="As turmas">
-            <div class="card-body">
-                <h5 class="card-title">Acompanhe as turmas</h5>
-                <p class="card-text">Se pretende gerenciar ou acompanhar as turmas, clique no botão para ser redirecionado.</p>
-                <a asp-controller="Turmas" asp-action="Index" class="btn btn-primary">Ver turmas</a>
+    @if (User.IsInRole("Professor") || User.IsInRole("Admin")) {
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img height="200" src="/Icons/turmas.gif" class="card-img-top" alt="As turmas">
+                <div class="card-body">
+                    <h5 class="card-title">Acompanhe as turmas</h5>
+                    <p class="card-text">Se pretende gerenciar ou acompanhar as turmas, clique no botão para ser redirecionado.</p>
+                    <a asp-controller="Turmas" asp-action="Index" class="btn btn-primary">Ver turmas</a>
+                </div>
             </div>
-        </div>
-    </div>
+        </div>   
+    }
+    
 
     <!-- Card #3 Gestão -->
     @if (User.IsInRole("Admin")) {
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <img height="200" src="/Icons/HomeGestao.png" class="card-img-top" alt="Gestão da app">
-                <div class="card-body">
-                    <h5 class="card-title">Gerir alunos e turmas</h5>
-                    <p class="card-text">Se pretende gerenciar alunos, turmas, professores e contas, clique no botão para ser redirecionado.</p>
-                    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Gerenciar app</a>
-                </div>
-            </div>
-        </div>
-
         <!-- Card #3 Criação de Contas -->
         <div class="col">
             <div class="card" style="width: 18rem;">

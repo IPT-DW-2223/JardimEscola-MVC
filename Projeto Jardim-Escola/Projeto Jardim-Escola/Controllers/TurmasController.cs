@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Projeto_Jardim_Escola.Data;
 using Projeto_Jardim_Escola.Models;
 
+using Newtonsoft.Json;
+
 namespace Projeto_Jardim_Escola.Controllers
 {
     public class TurmasController : Controller
@@ -169,6 +171,24 @@ namespace Projeto_Jardim_Escola.Controllers
             
             await _baseDados.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        /// <summary>
+        /// Devolve a lista de todos os alunos da base de dados.
+        /// </summary>
+        /// <returns>Lista de alunos.</returns>
+        public ActionResult GetListaAlunos() {
+            // Recebe a lista de alunos da base de dados.
+            var alunos = _baseDados.Alunos;
+            
+            // Coverte a variável alunos que é uma DbSet para uma string
+            //      para que possa ser criada uma lista de alunos em JSON.
+            string json = JsonConvert.SerializeObject(alunos);
+
+            // Cria uma lista de alunos do tipo List que terá o formato JSON.
+            List<Alunos> listaAlunos = JsonConvert.DeserializeObject<List<Alunos>>(json);
+
+            return Json(listaAlunos);
         }
 
         private bool TurmasExists(int id)

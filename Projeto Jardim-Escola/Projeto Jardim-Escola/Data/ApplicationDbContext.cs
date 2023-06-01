@@ -42,12 +42,26 @@ namespace Projeto_Jardim_Escola.Data
                     Email = "admin@jardimescola.com", NormalizedEmail = "ADMIN@JARDIMESCOLA.COM", EmailConfirmed = true,
                     UserName = "admin@jardimescola.com", NormalizedUserName = "ADMIN@JARDIMESCOLA.COM",
                     PasswordHash = hasher.HashPassword(null, "Admin123.")
+                },
+                new IdentityUser {
+                    Id = "1",
+                    Email = "resp@jardimescola.com", NormalizedEmail = "RESP@JARDIMESCOLA.COM", EmailConfirmed = true,
+                    UserName = "resp@jardimescola.com", NormalizedUserName = "RESP@JARDIMESCOLA.COM",
+                    PasswordHash = hasher.HashPassword(null, "Responsavel123.")
+                },
+                new IdentityUser {
+                    Id = "2",
+                    Email = "prof@jardimescola.com", NormalizedEmail = "PROF@JARDIMESCOLA.COM", EmailConfirmed = true,
+                    UserName = "prof@jardimescola.com", NormalizedUserName = "PROF@JARDIMESCOLA.COM",
+                    PasswordHash = hasher.HashPassword(null, "Professor123.")
                 }
                 );
 
             // Adicionar o cargo "Admin" ao utilizador "admin@jardimescola.com".
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string> { RoleId = "adm", UserId = "0" }
+                new IdentityUserRole<string> { RoleId = "adm", UserId = "0" },
+                new IdentityUserRole<string> { RoleId = "enc", UserId = "1" },
+                new IdentityUserRole<string> { RoleId = "prof", UserId = "2" }
                 );
 
         }

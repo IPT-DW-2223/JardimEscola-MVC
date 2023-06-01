@@ -88,7 +88,7 @@ namespace Projeto_Jardim_Escola.Controllers
                     alunos.Foto = nomeFoto;
                 }
             }
-
+            
             if (ModelState.IsValid)
             {
                 // Por pré-definição, o novo aluno estará sempre no estado 'ativo'.
