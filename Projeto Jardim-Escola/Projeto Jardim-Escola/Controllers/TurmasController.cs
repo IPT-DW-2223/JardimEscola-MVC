@@ -179,7 +179,8 @@ namespace Projeto_Jardim_Escola.Controllers
         /// <returns>Lista de alunos.</returns>
         public ActionResult GetListaAlunos() {
             // Recebe a lista de alunos da base de dados.
-            var alunos = _baseDados.Alunos;
+            //var alunos = _baseDados.Alunos;
+            var alunos = _baseDados.Alunos.Where(a => (a.Ativo)).OrderBy(a => a.Nome);
             
             // Coverte a variável alunos que é uma DbSet para uma string
             //      para que possa ser criada uma lista de alunos em JSON.
