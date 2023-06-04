@@ -24,7 +24,7 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
         public async Task<ActionResult<IEnumerable<AlunoViewModel>>> GetAlunos() {
             return await _baseDados.Alunos
                 .Include(a => a.Responsavel)
-                .OrderByDescending(a => a.Id)
+                .OrderBy(a => a.Nome)
                 .Select(a => new AlunoViewModel {
                     Id = a.Id,
                     Nome = a.Nome,

@@ -53,7 +53,7 @@ namespace Projeto_Jardim_Escola.Controllers
         {
             // var auxiliar
             //int idAnoLetivo = 3;  // 3=2022/2023, por exemplo
-
+            // TODO: fazer os comentários na função GetListaAlunos()
 
             ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo");
             ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome");

@@ -25,7 +25,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// </summary>
         [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
         [Display(Name = "Código Postal")]
-        [RegularExpression("[1-9][0-9]{3}-[0-9]{3}(){1,3}[A-Z -ÇÀÁÉÍÓÚÃÂÊÎÔÛ]+", ErrorMessage = " O {0} deve ter o formato")]
+        [RegularExpression("[1-9][0-9]{3}-[0-9]{3}(){1,3}[A-Z -ÇÀÁÉÍÓÚÃÂÊÎÔÛ]+", ErrorMessage = " O {0} deve ter o formato 0000-000 CIDADE")]
         [StringLength(40)]
         public string CodPostal { get; set; }
 
