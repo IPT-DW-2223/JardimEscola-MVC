@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="AnoLetivoFK" class="control-label"></label>
-                <select asp-for="AnoLetivoFK" id="anoLetivo" class="form-control" asp-items="ViewBag.AnoLetivoFK">
+                <select asp-for="AnoLetivoFK" id="anoLetivoId" class="form-control" asp-items="ViewBag.AnoLetivoFK">
                     <option value="0">--- Escolha o ano letivo ---</option>
                 </select>
             </div>
@@ -27,8 +27,9 @@
                 <label asp-for="ProfessorFK" class="control-label"></label>
                 <select asp-for="ProfessorFK" class ="form-control" asp-items="ViewBag.ProfessorFK"></select>
             </div>
+            <hr />
             <div class="form-group">
-                <input type="submit" value="Adicionar" class="btn btn-primary" />
+                <input type="submit" value="Adicionar" class="btn btn-primary col-12" />
             </div>
         </form>
     </div>        
@@ -48,10 +49,6 @@
     </div>  
 </div>
 
-<div>
-    <a asp-action="Index">Voltar</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
@@ -60,29 +57,41 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $('#anoLetivo').change(function () {
-                var anoLetivo = $(this).val();
+            $('#anoLetivoId').change(function () {
 
-                $.ajax({
-                    url: '/Turmas/GetListaAlunos',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (alunos) {
-                        var tabela = $('#tabelaAlunos tbody');
-                        tabela.empty();
+                // Obter o valor selecionado do elemento select.
+                var anoLetivoId = $(this).val();
 
+                if (anoLetivoId != 0) {
+                    // Criar um objeto para enviar os dados ao servidor.
+                    var data = {
+                        anoLetivoId: anoLetivoId
+                    };
+
+                    $.ajax({
+                        url: '/Turmas/GetListaAlunos',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: data,
+                        success: function (alunos) {
+                            var tabela = $('#tabelaAlunos tbody');
+                            tabela.empty();
                     
-                        alunos.forEach(function (aluno) {
-                            tabela.append('<tr><td>' + aluno.nome + '</td><td>' + aluno.identificacao + '</td></tr>');
-                        });
-                    },
-                    error: function () {
-                        console.log('Ocorreu um erro ao carregar os alunos.');
-                        var tabela = $('#tabelaAlunos tbody');
-                        tabela.empty();
-                        tabela.append('<tr><td>OCORREU UM ERRO</td></tr>');
-                    }
-                });
+                            alunos.forEach(function (aluno) {
+                                tabela.append('<tr><td><input type="checkbox" id="checkbox" name="checkbox"> Atribuir' + '</td><td>' + aluno.nome + '</td></tr>');
+                            });
+                        },
+                        error: function () {
+                            console.log('Ocorreu um erro ao carregar os alunos.');
+                            var tabela = $('#tabelaAlunos tbody');
+                            tabela.empty();
+                            tabela.append('<tr><td>OCORREU UM ERRO</td></tr>');
+                        }
+                    });
+                } else {
+                    var tabela = $('#tabelaAlunos tbody');
+                    tabela.empty();
+                }  
             });
         });
 

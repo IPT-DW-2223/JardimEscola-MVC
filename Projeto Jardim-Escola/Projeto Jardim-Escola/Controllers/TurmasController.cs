@@ -51,13 +51,9 @@ namespace Projeto_Jardim_Escola.Controllers
         // GET: Turmas/Create
         public IActionResult Create()
         {
-            // var auxiliar
-            //int idAnoLetivo = 3;  // 3=2022/2023, por exemplo
-            // TODO: fazer os comentários na função GetListaAlunos()
-
             ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo");
             ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome");
-            //ViewData["ListaAlunos"] = _baseDados.Alunos.Where(a =>(a.Ativo)&& (a.Turmas.Any(t => t.AnoLetivoFK != idAnoLetivo)));
+
             return View();
         }
 
@@ -177,11 +173,14 @@ namespace Projeto_Jardim_Escola.Controllers
         /// Devolve a lista de todos os alunos da base de dados.
         /// </summary>
         /// <returns>Lista de alunos.</returns>
-        public ActionResult GetListaAlunos() {
+        [HttpGet]
+        public ActionResult GetListaAlunos(int anoLetivoId) {
+
             // Recebe a lista de alunos da base de dados.
-            //var alunos = _baseDados.Alunos;
-            var alunos = _baseDados.Alunos.Where(a => (a.Ativo)).OrderBy(a => a.Nome);
-            
+            var alunos = _baseDados.Alunos
+                .Where(a => a.Ativo && !a.Turmas.Any(t => t.AnoLetivoFK == anoLetivoId))
+                .OrderBy(a => a.Nome);
+
             // Coverte a variável alunos que é uma DbSet para uma string
             //      para que possa ser criada uma lista de alunos em JSON.
             string json = JsonConvert.SerializeObject(alunos);
