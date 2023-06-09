@@ -46,6 +46,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Ativo)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Avaliacao)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -91,10 +94,16 @@
                     @Html.DisplayFor(modelItem => item.Ativo)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Avaliacao)
+                </td>
+                <td>
                     <a class="btn btn-warning btn-sm btn-outline-light" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
                     <a class="btn btn-info btn-sm btn-outline-light" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                    <a class="btn btn-danger btn-sm btn-outline-light" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                    @if (User.IsInRole("Administrador")) {
+                        <a class="btn btn-danger btn-sm btn-outline-light" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                    }
                 </td>
+       
             </tr>
         }
     </tbody>

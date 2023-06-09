@@ -42,6 +42,12 @@ namespace Projeto_Jardim_Escola.Models {
         /// </summary>
         public bool Ativo { get; set; }
 
+        /// <summary>
+        /// Avaliação do aluno.
+        /// </summary>
+        [Display(Name = "Avalição")]
+        public string Avaliacao { get; set; }
+
         // ---------------------------------------------------------------------------------------- //
         // ----- [Chaves Estrangeiras] ------------------------------------------------------------ //
         // ---------------------------------------------------------------------------------------- //

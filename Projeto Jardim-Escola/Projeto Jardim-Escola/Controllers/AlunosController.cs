@@ -147,7 +147,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos, IFormFile fotografia)
+        public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK, Avaliacao")] Alunos alunos, IFormFile fotografia)
         {
             if (id != alunos.Id)
             {
