@@ -64,6 +64,22 @@ namespace Projeto_Jardim_Escola.Data
                 new IdentityUserRole<string> { RoleId = "prof", UserId = "2" }
                 );
 
+            // Adicionar tipos de identificação à base de dados.
+            modelBuilder.Entity<TiposIdentificacao>().HasData(
+                new TiposIdentificacao { Id = 1, Nome = "Cartão de Cidadão" },
+                new TiposIdentificacao { Id = 2, Nome = "Bilhete de Identidade" },
+                new TiposIdentificacao { Id = 3, Nome = "Passaporte" },
+                new TiposIdentificacao { Id = 4, Nome = "Título de Residência"}
+                );
+
+            // Adicionar anos letivos.
+            modelBuilder.Entity<AnosLetivos>().HasData(
+                new AnosLetivos { Id = 1, AnoLetivo = "2021-2022" },
+                new AnosLetivos { Id = 2, AnoLetivo = "2022-2023" },
+                new AnosLetivos { Id = 3, AnoLetivo = "2023-2024" },
+                new AnosLetivos { Id = 4, AnoLetivo = "2024-2025" }
+                );
+
         }
 
         // ---------------------------------------------------------------------------------------- //

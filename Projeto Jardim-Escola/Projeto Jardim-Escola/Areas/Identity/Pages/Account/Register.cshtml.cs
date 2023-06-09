@@ -126,13 +126,10 @@ namespace Projeto_Jardim_Escola.Areas.Identity.Pages.Account
 
             string cargo = null;
 
-            // TODO: Conseguir receber dados da ActiveTab.
             if (ActiveTab == "v-pills-resp-tab") { cargo = "Enc. de Educação"; }
             if (ActiveTab == "v-pills-prof-tab") { cargo = "Professor"; }
             if (ActiveTab == "v-pills-admin-tab") { cargo = "Admin"; }
 
-            //if (ModelState.IsValid)
-            //{
             var user = CreateUser();
 
             await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
@@ -173,8 +170,7 @@ namespace Projeto_Jardim_Escola.Areas.Identity.Pages.Account
                 ModelState.AddModelError(string.Empty, error.Description);
             }
 
-            // If we got this far, something failed, redisplay form
-            return Page();
+            return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
         }
 
         private IdentityUser CreateUser()

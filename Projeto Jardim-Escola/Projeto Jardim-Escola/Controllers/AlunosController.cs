@@ -147,7 +147,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos)
+        public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos, IFormFile fotografia)
         {
             if (id != alunos.Id)
             {
@@ -204,14 +204,32 @@ namespace Projeto_Jardim_Escola.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
             if (_baseDados.Alunos == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Alunos'  is null.");
             }
+
             var alunos = await _baseDados.Alunos.FindAsync(id);
+            
             if (alunos != null)
             {
+                // Remove o aluno.
                 _baseDados.Alunos.Remove(alunos);
+
+                // Remove a fotografia associada ao aluno.
+                string nomeLocalizacaoFicheiro = _webHostEnvironment.WebRootPath;
+                nomeLocalizacaoFicheiro = Path.Combine(nomeLocalizacaoFicheiro, "Fotos");
+
+                // Nome do documento a eliminar.
+                string nomeDaFoto = Path.Combine(nomeLocalizacaoFicheiro, alunos.Foto);
+
+                //System.Diagnostics.Debug.WriteLine(nomeDaFoto);
+
+                if (Path.GetFileName(nomeDaFoto) != "default.png") {
+                    //System.Diagnostics.Debug.WriteLine("ESTOU A ELIMINAR.....");
+                    System.IO.File.Delete(nomeDaFoto);
+                }
             }
             
             await _baseDados.SaveChangesAsync();

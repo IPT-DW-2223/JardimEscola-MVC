@@ -51,7 +51,11 @@
             @Html.DisplayNameFor(model => model.Foto)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Foto)
+            @*@Html.DisplayFor(model => model.Foto)*@
+            <img src="~/Fotos/@Model.Foto"
+                 alt="Foto do @Model.Nome"
+                 title="@Model.Nome"
+                 height="100" />
         </dd>
         <dt class = "col-sm-2">
             Responsável

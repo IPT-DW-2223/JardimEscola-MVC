@@ -16,6 +16,8 @@ namespace Projeto_Jardim_Escola.Models {
         /// <summary>
         /// Data de nascimento do aluno.
         /// </summary>
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
         [Display(Name = "Data de Nascimento")]
         public DateTime DataNascimento { get; set; }

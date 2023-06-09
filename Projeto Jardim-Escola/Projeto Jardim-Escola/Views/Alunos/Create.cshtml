@@ -4,9 +4,7 @@
     ViewData["Title"] = "Adicionar";
 }
 
-<h1>Adicionar</h1>
-
-<h4>Aluno</h4>
+<h4>Adicionar um novo aluno</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -44,7 +42,11 @@
 
             <div class="form-group">
                 <label asp-for="Genero" class="control-label"></label>
-                <input asp-for="Genero" class="form-control" />
+                <select asp-for="Genero" class="form-control">
+                    <option value="Outro">Outro</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                </select>
                 <span asp-validation-for="Genero" class="text-danger"></span>
             </div>
 
@@ -61,7 +63,7 @@
 
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
+                    <input class="form-check-input" asp-for="Ativo" checked /> @Html.DisplayNameFor(model => model.Ativo)
                 </label>
             </div>
 
