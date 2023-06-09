@@ -62,16 +62,32 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,AnoLetivoFK,ProfessorFK")] Turmas turmas)
+        public async Task<IActionResult> Create([Bind("Id,Nome,AnoLetivoFK,ProfessorFK")] Turmas turmas, List<int> alunosSelecionados)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
+                // Adicionar a turma à base de dados.
                 _baseDados.Add(turmas);
+
+                // Sincroniza a base de dados.
                 await _baseDados.SaveChangesAsync();
+
+                // Associar os alunos selecionados à turma.
+                foreach (var alunoId in alunosSelecionados) {
+                    var aluno = _baseDados.Alunos.Include(a => a.Turmas).FirstOrDefault(a => a.Id == alunoId);
+                    if (aluno != null) {
+                        aluno.Turmas.Add(turmas);
+                    }
+                }
+
+                // Sincroniza a base de dados.
+                await _baseDados.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo", turmas.AnoLetivoFK);
             ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome", turmas.ProfessorFK);
+
             return View(turmas);
         }
 
@@ -83,14 +99,17 @@ namespace Projeto_Jardim_Escola.Controllers
                 return NotFound();
             }
 
-            var turmas = await _baseDados.Turmas.FindAsync(id);
-            if (turmas == null)
+            var turma = await _baseDados.Turmas.FindAsync(id);
+            if (turma == null)
             {
                 return NotFound();
             }
-            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo", turmas.AnoLetivoFK);
-            ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome", turmas.ProfessorFK);
-            return View(turmas);
+
+            // TODO: ("TurmasController.cs") acrescentar tabela com lista de alunos.
+
+            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo", turma.AnoLetivoFK);
+            ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome", turma.ProfessorFK);
+            return View(turma);
         }
 
         // POST: Turmas/Edit/5

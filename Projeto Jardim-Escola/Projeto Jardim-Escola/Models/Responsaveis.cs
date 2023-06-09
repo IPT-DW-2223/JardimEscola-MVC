@@ -13,6 +13,11 @@ namespace Projeto_Jardim_Escola.Models {
         }
 
         /// <summary>
+        /// Atributo que conecta o utilizador à autenticação da base de dados.
+        /// </summary>
+        public string UserID { get; set; }
+
+        /// <summary>
         /// Morada do encarregado de educação.
         /// </summary>
         [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]

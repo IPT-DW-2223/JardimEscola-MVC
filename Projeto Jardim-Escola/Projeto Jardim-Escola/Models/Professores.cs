@@ -13,6 +13,11 @@ namespace Projeto_Jardim_Escola.Models {
         }
 
         /// <summary>
+        /// Atributo que conecta o utilizador à autenticação da base de dados.
+        /// </summary>
+        public string UserID { get; set; }
+
+        /// <summary>
         /// Número de telemóvel do professor.
         /// </summary>
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]

@@ -19,14 +19,14 @@ namespace Projeto_Jardim_Escola.Controllers
             _baseDados = context;
         }
 
-        // GET: Professores
+        // GET: Professor
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _baseDados.Professores.Include(p => p.TipoIdentificacao);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Professores/Details/5
+        // GET: Professor/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _baseDados.Professores == null)
@@ -45,14 +45,14 @@ namespace Projeto_Jardim_Escola.Controllers
             return View(professor);
         }
 
-        // GET: Professores/Create
+        // GET: Professor/Create
         public IActionResult Create()
         {
             ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome");
             return View();
         }
 
-        // POST: Professores/Create
+        // POST: Professor/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -69,7 +69,7 @@ namespace Projeto_Jardim_Escola.Controllers
             return View(professores);
         }
 
-        // GET: Professores/Edit/5
+        // GET: Professor/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _baseDados.Professores == null)
@@ -86,7 +86,7 @@ namespace Projeto_Jardim_Escola.Controllers
             return View(professores);
         }
 
-        // POST: Professores/Edit/5
+        // POST: Professor/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -122,7 +122,7 @@ namespace Projeto_Jardim_Escola.Controllers
             return View(professores);
         }
 
-        // GET: Professores/Delete/5
+        // GET: Professor/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _baseDados.Professores == null)
@@ -141,14 +141,14 @@ namespace Projeto_Jardim_Escola.Controllers
             return View(professores);
         }
 
-        // POST: Professores/Delete/5
+        // POST: Professor/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_baseDados.Professores == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Professores'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Professor'  is null.");
             }
             var professores = await _baseDados.Professores.FindAsync(id);
             if (professores != null)

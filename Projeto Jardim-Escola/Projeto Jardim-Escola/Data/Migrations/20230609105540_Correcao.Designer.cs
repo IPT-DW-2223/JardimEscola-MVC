@@ -12,8 +12,8 @@ using Projeto_Jardim_Escola.Data;
 namespace Projeto_Jardim_Escola.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230525104600_AddAtivoToAlunos")]
-    partial class AddAtivoToAlunos
+    [Migration("20230609105540_Correcao")]
+    partial class Correcao
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -181,17 +181,49 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         {
                             Id = "0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ee18ea32-b342-4f1e-a874-24ed50a5407b",
+                            ConcurrencyStamp = "2293d6f5-d30f-45cf-b2ef-aec38a8c602a",
                             Email = "admin@jardimescola.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@JARDIMESCOLA.COM",
                             NormalizedUserName = "ADMIN@JARDIMESCOLA.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDf6B49x8LrmHswkGq+VyagqPnvO7utCtVIy7JvsLDDfJaM8KY6smIS5QJJEFXpG3A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGD9Ei+C5TG5xS2439unFTPc+tGovB8Abcou574o6zcQrz6HaauZdUUuyY7EhF68aA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "aa0727c6-0a1c-4642-b7d9-8219336c1f9d",
+                            SecurityStamp = "d4a37e6b-483c-4c2f-ac23-f1feb1426524",
                             TwoFactorEnabled = false,
                             UserName = "admin@jardimescola.com"
+                        },
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1589eca7-df2e-41c3-8a5c-9f1d2fb2f14f",
+                            Email = "resp@jardimescola.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "RESP@JARDIMESCOLA.COM",
+                            NormalizedUserName = "RESP@JARDIMESCOLA.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIjyZb8K/o80nXwJxDe+HQ6TVSLt2e2TQxbIP6z1hMCVAYJgCgp5t/HYy5tfdpY+Ig==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "1a205ed9-5d5a-4bfb-84a9-d8b8f6196528",
+                            TwoFactorEnabled = false,
+                            UserName = "resp@jardimescola.com"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "42c79483-6594-4dfd-8a57-e6845f1f7e05",
+                            Email = "prof@jardimescola.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PROF@JARDIMESCOLA.COM",
+                            NormalizedUserName = "PROF@JARDIMESCOLA.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEM0QH0w01WFBmGWJKfIsLjFNl4Y9PEzhPI9kXWxSgde4NuryMiz0WFswKWX+WSe+jQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "dcd9b617-bf74-4214-a61d-ab193ea91ccb",
+                            TwoFactorEnabled = false,
+                            UserName = "prof@jardimescola.com"
                         });
                 });
 
@@ -263,6 +295,16 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         {
                             UserId = "0",
                             RoleId = "adm"
+                        },
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "enc"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "prof"
                         });
                 });
 
@@ -411,7 +453,7 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                     b.HasDiscriminator().HasValue("Alunos");
                 });
 
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Professor", b =>
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Professores", b =>
                 {
                     b.HasBaseType("Projeto_Jardim_Escola.Models.Pessoas");
 
@@ -425,10 +467,13 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)");
 
-                    b.HasDiscriminator().HasValue("Professor");
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Professores");
                 });
 
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Responsavel", b =>
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Responsaveis", b =>
                 {
                     b.HasBaseType("Projeto_Jardim_Escola.Models.Pessoas");
 
@@ -459,6 +504,9 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         .HasMaxLength(14)
                         .HasColumnType("nvarchar(14)");
 
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.ToTable("Pessoas", t =>
                         {
                             t.Property("Email")
@@ -466,9 +514,12 @@ namespace Projeto_Jardim_Escola.Data.Migrations
 
                             t.Property("Telemovel")
                                 .HasColumnName("Responsaveis_Telemovel");
+
+                            t.Property("UserID")
+                                .HasColumnName("Responsaveis_UserID");
                         });
 
-                    b.HasDiscriminator().HasValue("Responsavel");
+                    b.HasDiscriminator().HasValue("Responsaveis");
                 });
 
             modelBuilder.Entity("AlunosTurmas", b =>
@@ -556,7 +607,7 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Projeto_Jardim_Escola.Models.Professor", "Professor")
+                    b.HasOne("Projeto_Jardim_Escola.Models.Professores", "Professor")
                         .WithMany("Turmas")
                         .HasForeignKey("ProfessorFK")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -569,7 +620,7 @@ namespace Projeto_Jardim_Escola.Data.Migrations
 
             modelBuilder.Entity("Projeto_Jardim_Escola.Models.Alunos", b =>
                 {
-                    b.HasOne("Projeto_Jardim_Escola.Models.Responsavel", "Responsavel")
+                    b.HasOne("Projeto_Jardim_Escola.Models.Responsaveis", "Responsavel")
                         .WithMany("Alunos")
                         .HasForeignKey("ResponsavelFK")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -588,12 +639,12 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                     b.Navigation("Pessoas");
                 });
 
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Professor", b =>
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Professores", b =>
                 {
                     b.Navigation("Turmas");
                 });
 
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Responsavel", b =>
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Responsaveis", b =>
                 {
                     b.Navigation("Alunos");
                 });

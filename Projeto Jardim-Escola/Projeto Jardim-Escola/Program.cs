@@ -20,7 +20,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
  * Declarar a existência do serviço de Autenticação
  *  e declaração da classe com os dados do utilizador registado.
  */
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>() // Adiciona a capacidade da app de identificar 'perfis' de utilizador.
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -34,6 +34,13 @@ builder.Services.AddSession(options => {
     options.Cookie.IsEssential = true;
 }
 );
+
+/**
+ * Configurar os cookies para poderem ser utilizados pela aplicação React.
+ */
+builder.Services.ConfigureApplicationCookie(options => { 
+    options.Cookie.SameSite = SameSiteMode.None;
+});
 
 builder.Services.AddControllersWithViews();
 

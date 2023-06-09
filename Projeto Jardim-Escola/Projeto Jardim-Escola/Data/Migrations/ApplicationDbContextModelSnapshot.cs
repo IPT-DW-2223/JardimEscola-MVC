@@ -178,15 +178,15 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         {
                             Id = "0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "79d4dd2b-447d-431f-a5ca-c86d04cfb9b5",
+                            ConcurrencyStamp = "2293d6f5-d30f-45cf-b2ef-aec38a8c602a",
                             Email = "admin@jardimescola.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@JARDIMESCOLA.COM",
                             NormalizedUserName = "ADMIN@JARDIMESCOLA.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJyURFQHHe4RWh8YYJwCi4C16a+vg0xg1DoCEA3nPWggKMCQiq9r2bmdSX+PY+zoPw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGD9Ei+C5TG5xS2439unFTPc+tGovB8Abcou574o6zcQrz6HaauZdUUuyY7EhF68aA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "352f21cc-67a2-4890-8a88-673980205742",
+                            SecurityStamp = "d4a37e6b-483c-4c2f-ac23-f1feb1426524",
                             TwoFactorEnabled = false,
                             UserName = "admin@jardimescola.com"
                         },
@@ -194,15 +194,15 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "824b59f3-5082-40fa-b05b-c81ce69285b6",
+                            ConcurrencyStamp = "1589eca7-df2e-41c3-8a5c-9f1d2fb2f14f",
                             Email = "resp@jardimescola.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "RESP@JARDIMESCOLA.COM",
                             NormalizedUserName = "RESP@JARDIMESCOLA.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPsOGr6OSwXjz8gXHp36Xbjl7YTH6VJFXS19Yzj8h+sVYNfG2/ToL5m0phPod8PsmA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIjyZb8K/o80nXwJxDe+HQ6TVSLt2e2TQxbIP6z1hMCVAYJgCgp5t/HYy5tfdpY+Ig==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "acf4f645-5929-4ed9-a039-b7f8e224cd36",
+                            SecurityStamp = "1a205ed9-5d5a-4bfb-84a9-d8b8f6196528",
                             TwoFactorEnabled = false,
                             UserName = "resp@jardimescola.com"
                         },
@@ -210,15 +210,15 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1475d596-8de2-48ee-b77f-22fdd6d64556",
+                            ConcurrencyStamp = "42c79483-6594-4dfd-8a57-e6845f1f7e05",
                             Email = "prof@jardimescola.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "PROF@JARDIMESCOLA.COM",
                             NormalizedUserName = "PROF@JARDIMESCOLA.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMtc/dnj6rLgMQrRyCerBWMdL5tXImHI73Cn4rRAwbUErrkZPU7KH6AVaUoED9Oifg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEM0QH0w01WFBmGWJKfIsLjFNl4Y9PEzhPI9kXWxSgde4NuryMiz0WFswKWX+WSe+jQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "484d6fcb-e260-46f0-9a2d-fe44327ba665",
+                            SecurityStamp = "dcd9b617-bf74-4214-a61d-ab193ea91ccb",
                             TwoFactorEnabled = false,
                             UserName = "prof@jardimescola.com"
                         });
@@ -464,6 +464,9 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)");
 
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasDiscriminator().HasValue("Professores");
                 });
 
@@ -498,6 +501,9 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         .HasMaxLength(14)
                         .HasColumnType("nvarchar(14)");
 
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.ToTable("Pessoas", t =>
                         {
                             t.Property("Email")
@@ -505,6 +511,9 @@ namespace Projeto_Jardim_Escola.Data.Migrations
 
                             t.Property("Telemovel")
                                 .HasColumnName("Responsaveis_Telemovel");
+
+                            t.Property("UserID")
+                                .HasColumnName("Responsaveis_UserID");
                         });
 
                     b.HasDiscriminator().HasValue("Responsaveis");

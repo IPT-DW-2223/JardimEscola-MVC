@@ -7,177 +7,239 @@
 <div class="row">
 
     <div class="col-md-12">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <legend class="text-center">Criar uma nova conta. <span class="req"><small>* de preenchimento obrigatório</small></span></legend>
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <div class="d-flex align-items-start">
+            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <h5>Escolha o tipo de conta:</h5>
+                <button class="nav-link active" id="v-pills-resp-tab" data-bs-toggle="pill" data-bs-target="#v-pills-resp" type="button" role="tab" aria-controls="v-pills-resp" aria-selected="true">Responsável</button>
+                <button class="nav-link" id="v-pills-prof-tab" data-bs-toggle="pill" data-bs-target="#v-pills-prof" type="button" role="tab" aria-controls="v-pills-prof" aria-selected="false">Professor</button>
+                <button class="nav-link" id="v-pills-admin-tab" data-bs-toggle="pill" data-bs-target="#v-pills-admin" type="button" role="tab" aria-controls="v-pills-admin" aria-selected="false">Administrador</button>    
+            </div>
+            <div class="tab-content" id="v-pills-tabContent">
 
-            <hr />
+                @* FORMULÁRIO PARA CRIAR UMA CONTA DE ENCARREGADO DE EDUCAÇÃO *@
+                <div class="tab-pane fade show active" id="v-pills-resp" role="tabpanel" aria-labelledby="v-pills-resp-tab" tabindex="0">
+                    <br />
+                    <h5>Vamos criar uma nova conta <strong>Encarregado de Educação</strong></h5>
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <input type="text" id="ActiveTab1" name="ActiveTab" hidden="hidden">
 
-            @* Ler os dados do Responsável *@
+                        @* --------------- NOME --------------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Responsavel.Nome" class="form-control" autocomplete="username" aria-required="true" placeholder="nome" />
+                            <label asp-for="Input.Responsavel.Nome">* Nome</label>
+                            <span asp-validation-for="Input.Responsavel.Nome" class="text-danger"></span>
+                        </div>
 
-            <div class="border border-primary rounded-2 row">
-                <h4 class="p-2">Criar uma conta para um Encarregado de Educação...</h4>
-                <hr />
-                <div class="col-md-6 col mb-1">
-                    @* --------------- NOME --------------- *@
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.Responsaveis.Nome" class="form-control" autocomplete="username" aria-required="true" placeholder="nome" />
-                        <label asp-for="Input.Responsaveis.Nome">* Nome</label>
-                        <span asp-validation-for="Input.Responsaveis.Nome" class="text-danger"></span>
-                    </div>
+                        @* ------------- TELEMÓVEL ------------ *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Responsavel.Telemovel" class="form-control" autocomplete="username" aria-required="true" placeholder="telemóvel" />
+                            <label asp-for="Input.Responsavel.Telemovel">* Telemóvel</label>
+                            <span asp-validation-for="Input.Responsavel.Telemovel" class="text-danger"></span>
+                        </div>
 
-                    @* ------------- TELEMÓVEL ------------ *@
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.Responsaveis.Telemovel" class="form-control" autocomplete="username" aria-required="true" placeholder="telemóvel" />
-                        <label asp-for="Input.Responsaveis.Telemovel">* Telemóvel</label>
-                        <span asp-validation-for="Input.Responsaveis.Telemovel" class="text-danger"></span>
-                    </div>
+                        @* -------------- MORADA -------------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Responsavel.Morada" class="form-control" autocomplete="username" aria-required="true" placeholder="morada" />
+                            <label asp-for="Input.Responsavel.Morada">* Morada</label>
+                            <span asp-validation-for="Input.Responsavel.Morada" class="text-danger"></span>
+                        </div>
 
-                    @* -------------- MORADA -------------- *@
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.Responsaveis.Morada" class="form-control" autocomplete="username" aria-required="true" placeholder="morada" />
-                        <label asp-for="Input.Responsaveis.Morada">* Morada</label>
-                        <span asp-validation-for="Input.Responsaveis.Morada" class="text-danger"></span>
-                    </div>
+                        @* ----------- CÓDIGO POSTAL ---------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Responsavel.CodPostal" class="form-control" autocomplete="username" aria-required="true" placeholder="código postal" />
+                            <label asp-for="Input.Responsavel.CodPostal">* Código Postal</label>
+                            <span asp-validation-for="Input.Responsavel.CodPostal" class="text-danger"></span>
+                        </div>
 
-                    @* ----------- CÓDIGO POSTAL ---------- *@
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.Responsaveis.CodPostal" class="form-control" autocomplete="username" aria-required="true" placeholder="código postal" />
-                        <label asp-for="Input.Responsaveis.CodPostal">* Código Postal</label>
-                        <span asp-validation-for="Input.Responsaveis.CodPostal" class="text-danger"></span>
-                    </div>
+                        @* ----------- ESCOLARIEDADE ----------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Responsavel.Escolaridade" class="form-control" autocomplete="username" aria-required="true" placeholder="escolaridade" />
+                            <label asp-for="Input.Responsavel.Escolaridade">* Escolaridade</label>
+                            <span asp-validation-for="Input.Responsavel.Escolaridade" class="text-danger"></span>
+                        </div>
 
-                    @* ----------- ESCOLARIEDADE ----------- *@
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.Responsaveis.Escolaridade" class="form-control" autocomplete="username" aria-required="true" placeholder="escolaridade" />
-                        <label asp-for="Input.Responsaveis.Escolaridade">* Escolaridade</label>
-                        <span asp-validation-for="Input.Responsaveis.Escolaridade" class="text-danger"></span>
-                    </div>
+                        @* ------------- PROFISSÃO ------------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Responsavel.Profissao" class="form-control" autocomplete="username" aria-required="true" placeholder="profissão" />
+                            <label asp-for="Input.Responsavel.Profissao">* Profissão</label>
+                            <span asp-validation-for="Input.Responsavel.Profissao" class="text-danger"></span>
+                        </div>
 
-                    @* ------------- PROFISSÃO ------------- *@
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.Responsaveis.Profissao" class="form-control" autocomplete="username" aria-required="true" placeholder="profissão" />
-                        <label asp-for="Input.Responsaveis.Profissao">* Profissão</label>
-                        <span asp-validation-for="Input.Responsaveis.Profissao" class="text-danger"></span>
-                    </div>
+                        @* ------- TIPO DE IDENTIFICAÇÃO ------ *@
+                        <div class="form-floating mb-3">
+                            <select asp-for="Input.Responsavel.TipoIdentificacaoFK" class="form-control form-select" asp-items="ViewBag.TipoIdentificacaoFK"></select>
+                        </div>
+
+                        @* ----------- IDENTIFICAÇÃO ---------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Responsavel.Identificacao" class="form-control" autocomplete="username" aria-required="true" placeholder="identificação" />
+                            <label asp-for="Input.Responsavel.Identificacao">* Número de Identificação</label>
+                            <span asp-validation-for="Input.Responsavel.Identificacao" class="text-danger"></span>
+                        </div>
+
+                        @* ---------------- NIF --------------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Responsavel.NIF" class="form-control" autocomplete="username" aria-required="true" placeholder="nif" />
+                            <label asp-for="Input.Responsavel.NIF">* NIF</label>
+                            <span asp-validation-for="Input.Responsavel.NIF" class="text-danger"></span>
+                        </div>
+
+                        @* --------------- EMAIL --------------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                            <label asp-for="Input.Email">* Email</label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        @* -------------- PASSWORD ------------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                            <label asp-for="Input.Password">* Password</label>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        @* -------- CONFIRMAR PASSWORD --------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                            <label asp-for="Input.ConfirmPassword">* Confirmar Password</label>
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <button id="registerSubmit" type="submit" class="btn btn-lg btn-success">Registar Conta <strong>Enc. Educação</strong></button>
+
+                    </form>
                 </div>
-                <div class="col-md-6 col mb-1">
-                    @* --------------- EMAIL --------------- *@
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                        <label asp-for="Input.Email">* Email</label>
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
-                    </div>
 
-                    @* -------------- PASSWORD ------------- *@
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                        <label asp-for="Input.Password">* Password</label>
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    </div>
+                @* FORMULÁRIO PARA CRIAR UMA CONTA DE PROFESSOR *@
+                <div class="tab-pane fade" id="v-pills-prof" role="tabpanel" aria-labelledby="v-pills-prof-tab" tabindex="0">
+                    <br />
+                    <h5>Vamos criar uma nova conta <strong>Professor</strong></h5>
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
 
-                    @* -------- CONFIRMAR PASSWORD --------- *@
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                        <label asp-for="Input.ConfirmPassword">* Confirmar Password</label>
-                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                    </div>
+                        <input type="text" id="ActiveTab2" name="ActiveTab" hidden="hidden">
 
-                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registar Conta</button>
+                        @* --------------- NOME --------------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Professor.Nome" class="form-control" autocomplete="username" aria-required="true" placeholder="nome" />
+                            <label asp-for="Input.Professor.Nome">* Nome</label>
+                            <span asp-validation-for="Input.Professor.Nome" class="text-danger"></span>
+                        </div>
+
+                        @* ------------- TELEMÓVEL ------------ *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Professor.Telemovel" class="form-control" autocomplete="username" aria-required="true" placeholder="telemóvel" />
+                            <label asp-for="Input.Professor.Telemovel">* Telemóvel</label>
+                            <span asp-validation-for="Input.Professor.Telemovel" class="text-danger"></span>
+                        </div>                             
+
+                        @* ------- TIPO DE IDENTIFICAÇÃO ------ *@
+                        <div class="form-floating mb-3">
+                            <select asp-for="Input.Professor.TipoIdentificacaoFK" class="form-control form-select" asp-items="ViewBag.TipoIdentificacaoFK"></select>
+                        </div>
+
+                        @* ----------- IDENTIFICAÇÃO ---------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Professor.Identificacao" class="form-control" autocomplete="username" aria-required="true" placeholder="identificação" />
+                            <label asp-for="Input.Professor.Identificacao">* Número de Identificação</label>
+                            <span asp-validation-for="Input.Professor.Identificacao" class="text-danger"></span>
+                        </div>
+
+                        @* ---------------- NIF --------------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Professor.NIF" class="form-control" autocomplete="username" aria-required="true" placeholder="nif" />
+                            <label asp-for="Input.Professor.NIF">* NIF</label>
+                            <span asp-validation-for="Input.Professor.NIF" class="text-danger"></span>
+                        </div>
+
+                        @* --------------- EMAIL -------------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                            <label asp-for="Input.Email">* Email</label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        @* -------------- PASSWORD ------------ *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                            <label asp-for="Input.Password">* Password</label>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        @* -------- CONFIRMAR PASSWORD -------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                            <label asp-for="Input.ConfirmPassword">* Confirmar Password</label>
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <button id="registerSubmit" type="submit" class="btn btn-lg btn-success">Registar Conta <strong>Professor</strong></button>
+
+                    </form>
                 </div>
+
+                @* FORMULÁRIO PARA CRIAR UMA CONTA DE ADMINISTRADOR *@
+                <div class="tab-pane fade" id="v-pills-admin" role="tabpanel" aria-labelledby="v-pills-admin-tab" tabindex="0">
+                    <br />
+                    <h5>Vamos criar uma nova conta <strong>Administrador</strong></h5>
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+
+                        <input type="text" id="ActiveTab3" name="ActiveTab" hidden="hidden">
+
+                        @* --------------- EMAIL -------------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                            <label asp-for="Input.Email">* Email</label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        @* -------------- PASSWORD ------------ *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                            <label asp-for="Input.Password">* Password</label>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        @* -------- CONFIRMAR PASSWORD -------- *@
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                            <label asp-for="Input.ConfirmPassword">* Confirmar Password</label>
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <button id="registerSubmit" type="submit" class="btn btn-lg btn-success">Registar Conta <strong>Administrador</strong></button>
+
+                    </form>
+                </div>
+
             </div>
-
-            <br />
-            <br />
-
-            @* Ler os dados do Responsável *@
-
-            @* --------------- NOME --------------- *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Responsaveis.Nome" class="form-control" autocomplete="username" aria-required="true" placeholder="nome" />
-                <label asp-for="Input.Responsaveis.Nome">* Nome</label>
-                <span asp-validation-for="Input.Responsaveis.Nome" class="text-danger"></span>
-            </div>
-
-            @* ------------- TELEMÓVEL ------------ *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Responsaveis.Telemovel" class="form-control" autocomplete="username" aria-required="true" placeholder="telemóvel" />
-                <label asp-for="Input.Responsaveis.Telemovel">* Telemóvel</label>
-                <span asp-validation-for="Input.Responsaveis.Telemovel" class="text-danger"></span>
-            </div>
-
-            @* -------------- MORADA -------------- *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Responsaveis.Morada" class="form-control" autocomplete="username" aria-required="true" placeholder="morada" />
-                <label asp-for="Input.Responsaveis.Morada">* Morada</label>
-                <span asp-validation-for="Input.Responsaveis.Morada" class="text-danger"></span>
-            </div>
-
-            @* ----------- CÓDIGO POSTAL ---------- *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Responsaveis.CodPostal" class="form-control" autocomplete="username" aria-required="true" placeholder="código postal" />
-                <label asp-for="Input.Responsaveis.CodPostal">* Código Postal</label>
-                <span asp-validation-for="Input.Responsaveis.CodPostal" class="text-danger"></span>
-            </div>
-
-            @* ----------- ESCOLARIEDADE ----------- *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Responsaveis.Escolaridade" class="form-control" autocomplete="username" aria-required="true" placeholder="escolaridade" />
-                <label asp-for="Input.Responsaveis.Escolaridade">* Escolaridade</label>
-                <span asp-validation-for="Input.Responsaveis.Escolaridade" class="text-danger"></span>
-            </div>
-
-            @* ------------- PROFISSÃO ------------- *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Responsaveis.Profissao" class="form-control" autocomplete="username" aria-required="true" placeholder="profissão" />
-                <label asp-for="Input.Responsaveis.Profissao">* Profissão</label>
-                <span asp-validation-for="Input.Responsaveis.Profissao" class="text-danger"></span>
-            </div>
-
-            <hr />
-
-            @* --------------- EMAIL --------------- *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">* Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-
-            @* -------------- PASSWORD ------------- *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">* Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-
-            @* -------- CONFIRMAR PASSWORD --------- *@
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">* Confirmar Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-
-            <hr />
-
-            @* -------------- CARGO ---------------- *@
-
-            <div class="form-floating mb-3">
-                <select asp-for="Input.Cargo" class="form-control">
-                    <option value="0">--- Escolha o Cargo ---</option>
-                    <option value="1">Encarregado de Educação</option>
-                    <option value="2">Professor</option>
-                    <option value="3">Administrador</option>
-                </select>
-                <span asp-validation-for="Input.Cargo" class="text-danger"></span>
-            </div>
-
-            <hr />
-
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registar Conta</button>
-        </form>
+        </div>
     </div>
 
 </div>
+
+<script>
+    document.getElementById('v-pills-resp-tab').addEventListener('click', function () {
+        // Obter o ID da tab ativa.
+        var activeTabId = document.querySelector('.nav-link.active').id;
+
+        // Definir o valor do campo oculto.
+        document.getElementById('ActiveTab1').value = activeTabId;
+    });
+    document.getElementById('v-pills-prof-tab').addEventListener('click', function () {
+        // Obter o ID da tab ativa.
+        var activeTabId = document.querySelector('.nav-link.active').id;
+
+        // Definir o valor do campo oculto.
+        document.getElementById('ActiveTab2').value = activeTabId;
+    });
+    document.getElementById('v-pills-admin-tab').addEventListener('click', function () {
+        // Obter o ID da tab ativa.
+        var activeTabId = document.querySelector('.nav-link.active').id;
+
+        // Definir o valor do campo oculto.
+        document.getElementById('ActiveTab3').value = activeTabId;
+    });
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

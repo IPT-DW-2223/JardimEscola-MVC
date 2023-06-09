@@ -16,7 +16,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 using Projeto_Jardim_Escola.Data;
@@ -81,77 +83,96 @@ namespace Projeto_Jardim_Escola.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} e um máximo de {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirmar password")]
+            [Compare("Password", ErrorMessage = "As passwords não coincidem.")]
             public string ConfirmPassword { get; set; }
 
             /// <summary>
             /// Coleta dados do responsável.
             /// </summary>
-            public Responsaveis Responsaveis { get; set; }
-            
+            public Responsaveis Responsavel { get; set; }
+
             /// <summary>
-            /// Atributo que guarda o cargo da conta a ser criada.
+            /// Coleta dados do professor.
             /// </summary>
-            public string Cargo { get; set; }
+            public Professores Professor { get; set; }
+
+            /// <summary>
+            /// Este atributo guarda o id da tab que está ativa.
+            /// </summary>
+            public string ActiveTab { get; set; }
+
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome");
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null, string ActiveTab = null)
         {
+            
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
+
+            string cargo = null;
+
+            // TODO: Conseguir receber dados da ActiveTab.
+            if (ActiveTab == "v-pills-resp-tab") { cargo = "Enc. de Educação"; }
+            if (ActiveTab == "v-pills-prof-tab") { cargo = "Professor"; }
+            if (ActiveTab == "v-pills-admin-tab") { cargo = "Admin"; }
+
+            //if (ModelState.IsValid)
+            //{
+            var user = CreateUser();
+
+            await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+            await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+            var result = await _userManager.CreateAsync(user, Input.Password);
+
+            if (result.Succeeded)
             {
-                var user = CreateUser();
+                _logger.LogInformation("O utilizador criou uma nova conta com password.");
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                /**
+                * Associar o novo utilizador a um cargo e,
+                *      adicioná-lo na tabela Pessoas.
+                */
 
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
+                await _userManager.AddToRoleAsync(user, cargo);
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                try {
+                    if (cargo == "Enc. de Educação") { 
+                        Input.Responsavel.UserID = user.Id;
+                        _baseDados.Add(Input.Responsavel);
+                        await _baseDados.SaveChangesAsync();
                     }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                    if (cargo == "Professor") {
+                        Input.Professor.UserID = user.Id;
+                        _baseDados.Add(Input.Professor);
+                        await _baseDados.SaveChangesAsync();
                     }
+                } catch (Exception) {
+                    await _userManager.DeleteAsync(user);
+                    ModelState.AddModelError("", "Não foi ppossível criar o utilizador... Algo correu mal.");
+                    return Page();
                 }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+
             }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            //}
 
             // If we got this far, something failed, redisplay form
             return Page();

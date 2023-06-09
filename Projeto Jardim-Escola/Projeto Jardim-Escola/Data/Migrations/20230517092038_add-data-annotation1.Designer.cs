@@ -408,7 +408,7 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                     b.HasDiscriminator().HasValue("Alunos");
                 });
 
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Professores", b =>
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Professor", b =>
                 {
                     b.HasBaseType("Projeto_Jardim_Escola.Models.Pessoas");
 
@@ -422,10 +422,10 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)");
 
-                    b.HasDiscriminator().HasValue("Professores");
+                    b.HasDiscriminator().HasValue("Professor");
                 });
 
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Responsaveis", b =>
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Responsavel", b =>
                 {
                     b.HasBaseType("Projeto_Jardim_Escola.Models.Pessoas");
 
@@ -465,7 +465,7 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                                 .HasColumnName("Responsaveis_Telemovel");
                         });
 
-                    b.HasDiscriminator().HasValue("Responsaveis");
+                    b.HasDiscriminator().HasValue("Responsavel");
                 });
 
             modelBuilder.Entity("AlunosTurmas", b =>
@@ -553,7 +553,7 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Projeto_Jardim_Escola.Models.Professores", "Professor")
+                    b.HasOne("Projeto_Jardim_Escola.Models.Professor", "Professor")
                         .WithMany("Turmas")
                         .HasForeignKey("ProfessorFK")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -566,7 +566,7 @@ namespace Projeto_Jardim_Escola.Data.Migrations
 
             modelBuilder.Entity("Projeto_Jardim_Escola.Models.Alunos", b =>
                 {
-                    b.HasOne("Projeto_Jardim_Escola.Models.Responsaveis", "Responsavel")
+                    b.HasOne("Projeto_Jardim_Escola.Models.Responsavel", "Responsavel")
                         .WithMany("Alunos")
                         .HasForeignKey("ResponsavelFK")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -585,12 +585,12 @@ namespace Projeto_Jardim_Escola.Data.Migrations
                     b.Navigation("Pessoas");
                 });
 
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Professores", b =>
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Professor", b =>
                 {
                     b.Navigation("Turmas");
                 });
 
-            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Responsaveis", b =>
+            modelBuilder.Entity("Projeto_Jardim_Escola.Models.Responsavel", b =>
                 {
                     b.Navigation("Alunos");
                 });

@@ -19,14 +19,14 @@ namespace Projeto_Jardim_Escola.Controllers
             _baseDados = context;
         }
 
-        // GET: Responsaveis
+        // GET: Responsavel
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _baseDados.Responsaveis.Include(r => r.TipoIdentificacao);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Responsaveis/Details/5
+        // GET: Responsavel/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _baseDados.Responsaveis == null)
@@ -45,14 +45,14 @@ namespace Projeto_Jardim_Escola.Controllers
             return View(responsavel);
         }
 
-        // GET: Responsaveis/Create
+        // GET: Responsavel/Create
         public IActionResult Create()
         {
             ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome");
             return View();
         }
 
-        // POST: Responsaveis/Create
+        // POST: Responsavel/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -69,7 +69,7 @@ namespace Projeto_Jardim_Escola.Controllers
             return View(responsaveis);
         }
 
-        // GET: Responsaveis/Edit/5
+        // GET: Responsavel/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _baseDados.Responsaveis == null)
@@ -86,7 +86,7 @@ namespace Projeto_Jardim_Escola.Controllers
             return View(responsaveis);
         }
 
-        // POST: Responsaveis/Edit/5
+        // POST: Responsavel/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -122,7 +122,7 @@ namespace Projeto_Jardim_Escola.Controllers
             return View(responsaveis);
         }
 
-        // GET: Responsaveis/Delete/5
+        // GET: Responsavel/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _baseDados.Responsaveis == null)
@@ -141,14 +141,14 @@ namespace Projeto_Jardim_Escola.Controllers
             return View(responsaveis);
         }
 
-        // POST: Responsaveis/Delete/5
+        // POST: Responsavel/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_baseDados.Responsaveis == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Responsaveis'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Responsavel'  is null.");
             }
             var responsaveis = await _baseDados.Responsaveis.FindAsync(id);
             if (responsaveis != null)
