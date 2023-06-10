@@ -52,59 +52,118 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataNascimento)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TipoIdentificacao.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Identificacao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NIF)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genero)
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.Foto)*@
-                    @if (string.IsNullOrEmpty(item.Foto)) {
+    @if (User.IsInRole("Administrador")) {
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataNascimento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoIdentificacao.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Identificacao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NIF)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genero)
+                    </td>
+                    <td>
                         @*@Html.DisplayFor(modelItem => item.Foto)*@
-                        <a>
-                            <img src="~/Fotos/@item.Foto" alt="Foto do aluno @Html.DisplayFor(modelItem => item.Foto)"
+                        @if (string.IsNullOrEmpty(item.Foto)) {
+                            @*@Html.DisplayFor(modelItem => item.Foto)*@
+                            <a>
+                                <img src="~/Fotos/@item.Foto" alt="Foto do aluno @Html.DisplayFor(modelItem => item.Foto)"
+                                     title="@item.Nome" height="50" />
+                            </a>
+                        } else {
+                            @*@Html.DisplayFor(modelItem => item.Foto)*@
+                            <img src="~/Fotos/@item.Foto" alt="Foto do aluno: @Html.DisplayFor(modelItem => item.Foto)"
                                  title="@item.Nome" height="50" />
-                        </a>
-                    } else {
-                        @*@Html.DisplayFor(modelItem => item.Foto)*@
-                        <img src="~/Fotos/@item.Foto" alt="Foto do aluno: @Html.DisplayFor(modelItem => item.Foto)"
-                             title="@item.Nome" height="50" />
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Responsavel.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ativo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Avaliacao)
-                </td>
-                <td>
-                    <a class="btn btn-warning btn-sm btn-outline-light" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                    <a class="btn btn-info btn-sm btn-outline-light" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                    @if (User.IsInRole("Administrador")) {
-                        <a class="btn btn-danger btn-sm btn-outline-light" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
-                    }
-                </td>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Responsavel.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ativo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Avaliacao)
+                    </td>
+                    <td>
+                        <a class="btn btn-warning btn-sm btn-outline-light" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                        <a class="btn btn-info btn-sm btn-outline-light" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                        @if (User.IsInRole("Administrador")) {
+                            <a class="btn btn-danger btn-sm btn-outline-light" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                        }
+                    </td>
        
-            </tr>
-        }
-    </tbody>
+                </tr>
+            }
+        </tbody>
+    } else {
+        <tbody>
+            @foreach (var item in Model.Where(a => a.Responsavel.UserID == User.Identity.Name)) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataNascimento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoIdentificacao.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Identificacao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NIF)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genero)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Foto)*@
+                        @if (string.IsNullOrEmpty(item.Foto)) {
+                            @*@Html.DisplayFor(modelItem => item.Foto)*@
+                            <a>
+                                <img src="~/Fotos/@item.Foto" alt="Foto do aluno @Html.DisplayFor(modelItem => item.Foto)"
+                                     title="@item.Nome" height="50" />
+                            </a>
+                        } else {
+                            @*@Html.DisplayFor(modelItem => item.Foto)*@
+                            <img src="~/Fotos/@item.Foto" alt="Foto do aluno: @Html.DisplayFor(modelItem => item.Foto)"
+                                 title="@item.Nome" height="50" />
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Responsavel.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ativo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Avaliacao)
+                    </td>
+                    <td>
+                        <a class="btn btn-warning btn-sm btn-outline-light" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                        <a class="btn btn-info btn-sm btn-outline-light" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                        @if (User.IsInRole("Administrador")) {
+                            <a class="btn btn-danger btn-sm btn-outline-light" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    }
+
 </table>

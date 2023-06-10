@@ -1,10 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Projeto_Jardim_Escola.Data;
 
-using Projeto_Jardim_Escola.Data;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
+
 using Projeto_Jardim_Escola.Models;
 using System.Diagnostics.CodeAnalysis;
 
@@ -32,6 +39,55 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
             _userManager = userManager;
         }
 
+        private async Task<bool> IsValidUser(string username, string password) {
+
+            var result = await _signInManager.PasswordSignInAsync(username, password, false, lockoutOnFailure: false);
+
+            ////var hasher = new PasswordHasher<IdentityUser>();
+            ////string passwordHash = hasher.HashPassword(null, password);
+            ////var user = _baseDados.Users.FirstOrDefault(u => u.UserName == username && u.PasswordHash == passwordHash);
+
+            //// Se o usuário for encontrado, as credenciais são válidas.
+            //if (user != null) {
+            //    return true;
+            //}
+
+            //// Caso contrário, as credenciais são inválidas.
+            //return false;
+
+            if (result.Succeeded) {
+                return true;
+            }
+
+            return false;
+        }
+
+        private string GenerateToken(string username) {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            // Gerar uma chave secreta aleatória com 32 bytes de comprimento
+            byte[] keyBytes = new byte[32];
+            using (var rng = new RNGCryptoServiceProvider()) {
+                rng.GetBytes(keyBytes);
+            }
+
+            // Converter a chave em uma string base64 para uso posterior
+            string secretKey = Convert.ToBase64String(keyBytes);
+            var key = Encoding.ASCII.GetBytes(secretKey); // Substitua pela sua chave secreta
+
+            var tokenDescriptor = new SecurityTokenDescriptor {
+                Subject = new ClaimsIdentity(new[] {
+                    new Claim(ClaimTypes.Name, username)
+                }),
+
+                Expires = DateTime.UtcNow.AddDays(7), // Define a expiração do token.
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
         /// <summary>
         /// Efetua o login e verifica se existe na base de dados.
         /// POST: Api/Login
@@ -40,15 +96,17 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
         /// <returns>Login autorizado ou não autorizado.</returns>
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel model) {
-            
-            var user = await _userManager.FindByNameAsync(model.UserName);
+            // Validar as credenciais do usuário
+            if (await IsValidUser(model.Username, model.Password)) {
+                // Crie um token de autenticação para o usuário
+                var token = GenerateToken(model.Username);
 
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password)) {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return Ok();
+                // Retorne o token como resposta
+                return Ok(token);
             }
 
-            return Unauthorized();
+            // Se as credenciais forem inválidas, retorne uma resposta de erro
+            return BadRequest("Credenciais inválidas.");
         }
 
         /// <summary>
@@ -69,7 +127,8 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
                     TipoIdentificacao = a.TipoIdentificacaoFK,
                     NIF = a.NIF,
                     DataNascimento = a.DataNascimento,
-                    Responsavel = a.Responsavel.Nome
+                    Responsavel = a.Responsavel.Nome,
+                    Avaliacao = a.Avaliacao
                 })
                 .ToListAsync();
         }

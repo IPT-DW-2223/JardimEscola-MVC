@@ -25,15 +25,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 /**
- * Declarar o servião das variáveis de sessão.
+ * Declarar o serviço das variáveis de sessão.
  */
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => {
     options.IdleTimeout = TimeSpan.FromSeconds(120);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
-}
-);
+});
 
 /**
  * Configurar os cookies para poderem ser utilizados pela aplicação React.
@@ -63,7 +62,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Usar o servi�o das vari�veis de sess�o.
+// Usar o serviço das variáveis de sessão.
 app.UseSession();
 
 app.UseAuthorization();

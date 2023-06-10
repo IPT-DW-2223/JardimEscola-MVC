@@ -4,7 +4,7 @@
     /// Esta class contém os dados de login do React para o MVC.
     /// </summary>
     public class LoginViewModel {
-        public string UserName { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
     }
 
@@ -19,14 +19,7 @@
         public string NIF { get; set; }
         public DateTime DataNascimento { get; set; }
         public string Responsavel { get; set; }
-    }
-
-    public class ResponsavelViewModel {
-        public int Id { get; set; }
-        public string Identificacao { get; set; }
-        public int TipoIdentificacao { get; set; }
-        public string NIF { get; set; }
-        // TODO: CONTINUAR ResponsavelViewModel
+        public string Avaliacao { get; set; }
     }
 
 }
