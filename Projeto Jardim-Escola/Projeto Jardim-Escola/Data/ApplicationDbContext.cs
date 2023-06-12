@@ -54,8 +54,7 @@ namespace Projeto_Jardim_Escola.Data
                     Email = "prof@jardimescola.com", NormalizedEmail = "PROF@JARDIMESCOLA.COM", EmailConfirmed = true,
                     UserName = "prof@jardimescola.com", NormalizedUserName = "PROF@JARDIMESCOLA.COM",
                     PasswordHash = hasher.HashPassword(null, "Professor123.")
-                }
-                );
+                });
 
             // Relacionar os cargos criados com os utilizadores criados.
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(

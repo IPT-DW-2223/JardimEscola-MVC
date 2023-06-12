@@ -29,8 +29,8 @@ namespace Projeto_Jardim_Escola.Controllers
         // GET: Alunos
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _baseDados.Alunos.Include(a => a.TipoIdentificacao).Include(a => a.Responsavel);
-            return View(await applicationDbContext.ToListAsync());
+            var alunos = _baseDados.Alunos.Include(a => a.TipoIdentificacao).Include(a => a.Responsavel);
+            return View(await alunos.ToListAsync());
         }
 
         // GET: Alunos/Details/5

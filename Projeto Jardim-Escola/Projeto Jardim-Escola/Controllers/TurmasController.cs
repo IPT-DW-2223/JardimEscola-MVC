@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Projeto_Jardim_Escola.Data;
 using Projeto_Jardim_Escola.Models;
-
 using Newtonsoft.Json;
 
 namespace Projeto_Jardim_Escola.Controllers
@@ -62,7 +61,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,AnoLetivoFK,ProfessorFK")] Turmas turmas, List<int> alunosSelecionados)
+        public async Task<IActionResult> Create([Bind("Id,Nome,AnoLetivoFK,ProfessorFK")] Turmas turmas, string alunosSelecionados)
         {
             if (ModelState.IsValid) {
                 // Adicionar a turma à base de dados.
@@ -71,8 +70,10 @@ namespace Projeto_Jardim_Escola.Controllers
                 // Sincroniza a base de dados.
                 await _baseDados.SaveChangesAsync();
 
+                List<int> listaAlunosIds = JsonConvert.DeserializeObject<List<int>>(alunosSelecionados);
+
                 // Associar os alunos selecionados à turma.
-                foreach (var alunoId in alunosSelecionados) {
+                foreach (var alunoId in listaAlunosIds) {
                     var aluno = _baseDados.Alunos.Include(a => a.Turmas).FirstOrDefault(a => a.Id == alunoId);
                     if (aluno != null) {
                         aluno.Turmas.Add(turmas);

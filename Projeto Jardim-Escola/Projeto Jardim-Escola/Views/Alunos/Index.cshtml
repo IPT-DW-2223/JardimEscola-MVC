@@ -110,7 +110,7 @@
         </tbody>
     } else {
         <tbody>
-            @foreach (var item in Model.Where(a => a.Responsavel.UserID == User.Identity.Name)) {
+            @foreach (var item in Model) {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Nome)
@@ -156,7 +156,7 @@
                     <td>
                         <a class="btn btn-warning btn-sm btn-outline-light" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
                         <a class="btn btn-info btn-sm btn-outline-light" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                        @if (User.IsInRole("Administrador")) {
+                        @if (User.IsInRole("Admin")) {
                             <a class="btn btn-danger btn-sm btn-outline-light" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
                         }
                     </td>

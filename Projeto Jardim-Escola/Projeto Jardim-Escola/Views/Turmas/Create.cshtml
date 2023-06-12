@@ -107,25 +107,23 @@
              *      também associa os alunos selecionadas
              *      a essa turma adicionada.
              */
-            $("#btnAdicionar").click(function (event) {               
-                // Impedir o envio do formulário padrão.
+            $("#btnAdicionar").click(function (event) {
                 event.preventDefault();
 
-                // Obter os valores dos alunos selecionados.
                 var alunosSelecionados = [];
-                $("#tabelaAlunos input[name='checkbox']:checked").each(function() {
+                $("#tabelaAlunos input[name='checkbox']:checked").each(function () {
                     var alunoId = $(this).closest("tr").find("td:eq(2)").text();
                     alunosSelecionados.push(alunoId);
                 });
 
                 // Adicionar os valores dos alunos selecionados como campo oculto no formulário.
-                $("<input>")
-                    .attr("type","hidden")
-                    .attr("name","alunosSelecionados")
-                    .val(alunosSelecionados.join(","))
+                var alunosSelecionadosInput = $("<input>")
+                    .attr("type", "hidden")
+                    .attr("name", "alunosSelecionados")
                     .appendTo("#turmaForm");
 
-                // Enviar o formulário para o Controller.
+                alunosSelecionadosInput.val(JSON.stringify(alunosSelecionados));
+
                 $("#turmaForm").submit();
             });
 

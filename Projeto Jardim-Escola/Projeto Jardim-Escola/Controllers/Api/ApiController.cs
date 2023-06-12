@@ -39,21 +39,15 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
             _userManager = userManager;
         }
 
+        /// <summary>
+        /// Valida se o utilizador existe.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns>True: existe; False: não existe</returns>
         private async Task<bool> IsValidUser(string username, string password) {
 
             var result = await _signInManager.PasswordSignInAsync(username, password, false, lockoutOnFailure: false);
-
-            ////var hasher = new PasswordHasher<IdentityUser>();
-            ////string passwordHash = hasher.HashPassword(null, password);
-            ////var user = _baseDados.Users.FirstOrDefault(u => u.UserName == username && u.PasswordHash == passwordHash);
-
-            //// Se o usuário for encontrado, as credenciais são válidas.
-            //if (user != null) {
-            //    return true;
-            //}
-
-            //// Caso contrário, as credenciais são inválidas.
-            //return false;
 
             if (result.Succeeded) {
                 return true;
@@ -62,6 +56,11 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
             return false;
         }
 
+        /// <summary>
+        /// Gera um token para o utilizador.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>Token gerado.</returns>
         private string GenerateToken(string username) {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -132,8 +131,6 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
                 })
                 .ToListAsync();
         }
-
-        // TODO: Verificar se é necessário fazer a API retornar os dados dos Responsáveis.
 
     }
 }

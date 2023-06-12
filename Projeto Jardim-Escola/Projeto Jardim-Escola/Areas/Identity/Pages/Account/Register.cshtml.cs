@@ -126,7 +126,7 @@ namespace Projeto_Jardim_Escola.Areas.Identity.Pages.Account
 
             string cargo = null;
 
-            if (ActiveTab == "v-pills-resp-tab") { cargo = "Enc. de Educação"; }
+            if (ActiveTab == "v-pills-resp-tab" || ActiveTab == null) { cargo = "Enc. de Educação"; }
             if (ActiveTab == "v-pills-prof-tab") { cargo = "Professor"; }
             if (ActiveTab == "v-pills-admin-tab") { cargo = "Admin"; }
 
