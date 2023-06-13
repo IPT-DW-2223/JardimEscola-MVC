@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 
 using Projeto_Jardim_Escola.Models;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Projeto_Jardim_Escola.Controllers.Api {
     [Route("[controller]")]
@@ -116,8 +117,16 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
         [Authorize]
         [HttpGet("Alunos/Lista")]
         public async Task<ActionResult<IEnumerable<AlunoViewModel>>> GetAlunos() {
+            var loggedUser = await _userManager.GetUserAsync(User);
+            var loggedUserId = await _userManager.GetUserIdAsync(loggedUser);
+            var loggedResponsavelId = await _baseDados.Responsaveis
+                .Where(r => r.UserID.Equals(loggedUserId))
+                .Select(r => r.Id)
+                .FirstOrDefaultAsync();
+
             return await _baseDados.Alunos
                 .Include(a => a.Responsavel)
+                .Where(a => a.ResponsavelFK.Equals(loggedResponsavelId))
                 .OrderBy(a => a.Nome)
                 .Select(a => new AlunoViewModel {
                     Id = a.Id,
@@ -130,6 +139,26 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
                     Avaliacao = a.Avaliacao
                 })
                 .ToListAsync();
+        }
+
+        /// <summary>
+        /// Função para inserir a avaliação de um aluno via API.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPut("Alunos/Avaliar")]
+        public async Task<IActionResult> AvaliarAluno(int? id, Alunos aluno) {
+            if (id == null || _baseDados.Alunos == null) {
+                return NotFound();
+            }
+
+            var alunos = await _baseDados.Alunos.FindAsync(id);
+            if (alunos == null) {
+                return NotFound();
+            }
+
+            return Ok(alunos);
         }
 
     }

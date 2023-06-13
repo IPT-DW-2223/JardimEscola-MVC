@@ -150,11 +150,13 @@ namespace Projeto_Jardim_Escola.Areas.Identity.Pages.Account
                 try {
                     if (cargo == "Enc. de Educação") { 
                         Input.Responsavel.UserID = user.Id;
+                        Input.Responsavel.Email = user.Email;
                         _baseDados.Add(Input.Responsavel);
                         await _baseDados.SaveChangesAsync();
                     }
                     if (cargo == "Professor") {
                         Input.Professor.UserID = user.Id;
+                        Input.Professor.Email = user.Email;
                         _baseDados.Add(Input.Professor);
                         await _baseDados.SaveChangesAsync();
                     }
