@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Projeto_Jardim_Escola.Models;
 
 namespace Projeto_Jardim_Escola.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ResponsaveisController : Controller
     {
         private readonly ApplicationDbContext _baseDados;
@@ -22,8 +24,8 @@ namespace Projeto_Jardim_Escola.Controllers
         // GET: Responsavel
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _baseDados.Responsaveis.Include(r => r.TipoIdentificacao);
-            return View(await applicationDbContext.ToListAsync());
+            var responsaveis = _baseDados.Responsaveis.Include(r => r.TipoIdentificacao);
+            return View(await responsaveis.ToListAsync());
         }
 
         // GET: Responsavel/Details/5

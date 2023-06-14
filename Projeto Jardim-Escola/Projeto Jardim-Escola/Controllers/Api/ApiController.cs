@@ -110,10 +110,10 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
         }
 
         /// <summary>
-        /// Retorna todos os dados da tabela Alunos.
+        /// Retorna uma lista de alunos associados ao utilizador autenticado.
         /// GET: Api/Alunos/Lista
         /// </summary>
-        /// <returns>Lista de alunos.</returns>
+        /// <returns>Lista de alunos do utilizador autenticado.</returns>
         [Authorize]
         [HttpGet("Alunos/Lista")]
         public async Task<ActionResult<IEnumerable<AlunoViewModel>>> GetAlunos() {
@@ -147,18 +147,45 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPut("Alunos/Avaliar")]
-        public async Task<IActionResult> AvaliarAluno(int? id, Alunos aluno) {
-            if (id == null || _baseDados.Alunos == null) {
+        [HttpPost("Alunos/Avaliar")]
+        public async Task<IActionResult> AvaliarAluno([FromQuery] int alunoId, [FromBody] string avaliacao) {
+
+            // TODO: verificar se o user logado é professor.
+
+            if (avaliacao == "") { avaliacao = "Não revela progressos"; } 
+
+            // Encontrar o aluno com o Id fornecido.
+            var aluno = await _baseDados.Alunos.FindAsync(alunoId);
+
+            // Se não encontrar o aluno, retorna NotFound.
+            if (aluno == null) {
                 return NotFound();
             }
 
-            var alunos = await _baseDados.Alunos.FindAsync(id);
-            if (alunos == null) {
-                return NotFound();
+            // Se chegámos aqui, é porque encontrou o aluno e então associa a avaliação fornecida a ele.
+            aluno.Avaliacao = avaliacao;
+
+            // Tenta guardar na base dados.
+            try {
+                await _baseDados.SaveChangesAsync();
+            } catch (DbUpdateConcurrencyException) {
+                if (!existeAluno(alunoId)) {
+                    return NotFound();
+                } else {
+                    throw;
+                }
             }
 
-            return Ok(alunos);
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Verifica se o aluno existe.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>True: existe; False: não existe</returns>
+        private bool existeAluno(int id) {
+            return _baseDados.Alunos.Any(a => a.Id == id);
         }
 
     }

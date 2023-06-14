@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +12,7 @@ using Projeto_Jardim_Escola.Models;
 
 namespace Projeto_Jardim_Escola.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TiposIdentificacoesController : Controller
     {
         private readonly ApplicationDbContext _baseDados;

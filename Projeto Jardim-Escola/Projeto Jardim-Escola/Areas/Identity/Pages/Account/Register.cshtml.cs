@@ -113,6 +113,24 @@ namespace Projeto_Jardim_Escola.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            // Envia para a View a lista de responsáveis:
+            ViewData["Responsaveis"] = await _baseDados.Responsaveis.Include(r => r.TipoIdentificacao).ToListAsync();
+
+            // Envia para a View a lista de professores:
+            ViewData["Professores"] = await _baseDados.Professores.Include(p => p.TipoIdentificacao).ToListAsync();
+
+            // Envia para a View a lista de administradores:
+            var adminIds = await _baseDados.UserRoles
+                .Where(ur => ur.RoleId.Equals("adm"))
+                .Select(ur => ur.UserId)
+                .ToListAsync();
+
+            var admins = await _baseDados.Users
+                .Where(u => adminIds.Contains(u.Id))
+                .ToListAsync();
+
+            ViewData["Administradores"] = admins;
+
             ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome");
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();

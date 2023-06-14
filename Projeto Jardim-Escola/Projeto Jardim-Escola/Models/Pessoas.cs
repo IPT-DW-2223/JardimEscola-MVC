@@ -6,7 +6,7 @@ namespace Projeto_Jardim_Escola.Models
     /// <summary>
     /// Descrição das pessoas.
     /// </summary>
-    public class Pessoas{
+    public class Pessoas {
 
         /// <summary>
         /// Chave primária da turma.

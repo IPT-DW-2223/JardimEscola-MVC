@@ -6,9 +6,6 @@
 
 <h1>Responsáveis</h1>
 
-<p>
-    <a asp-action="Create">Adicionar registo</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -41,6 +38,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NIF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserID)
             </th>
             <th></th>
         </tr>
@@ -80,10 +80,17 @@
                 </td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                    @Html.DisplayFor(modelItem => item.UserID)
                 </td>
+
+                @if (User.IsInRole("Admin")) {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                    </td>
+                }
+                
             </tr>
         }
     </tbody>
