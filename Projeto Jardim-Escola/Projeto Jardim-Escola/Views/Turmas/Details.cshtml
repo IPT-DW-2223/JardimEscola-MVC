@@ -31,6 +31,48 @@
         </dd>
     </dl>
 </div>
+
+<div>
+    <h5>Lista de alunos da turma</h5>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nome do Aluno
+                </th>
+                <th>
+                    Identificação
+                </th>
+                <th>
+                    Avaliação
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Alunos) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Identificacao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Avaliacao)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
     <a asp-action="Index">Voltar</a>

@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Projeto_Jardim_Escola.Data;
 using Projeto_Jardim_Escola.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Projeto_Jardim_Escola.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TurmasController : Controller
     {
         private readonly ApplicationDbContext _baseDados;
@@ -38,6 +41,7 @@ namespace Projeto_Jardim_Escola.Controllers
             var turma = await _baseDados.Turmas
                 .Include(t => t.AnoLetivo)
                 .Include(t => t.Professor)
+                .Include(t => t.Alunos)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (turma == null)
             {

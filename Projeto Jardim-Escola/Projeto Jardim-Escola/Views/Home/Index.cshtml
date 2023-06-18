@@ -12,7 +12,7 @@
 <div>
     <h3>Que bom te ver, @User.Identity.Name!</h3>
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-        <button type="button" class="btn btn-outline-primary">Definições da conta</button>
+        @*<button type="button" class="btn btn-outline-primary">Definições da conta</button>*@
         <button type="submit" class="btn btn-outline-danger">Terminar sessão</button>
     </form>
 </div>
@@ -49,8 +49,9 @@
     }
     
 
-    <!-- Card #3 Gestão -->
+    <!-- Cards Admins -->
     @if (User.IsInRole("Admin")) {
+
         <!-- Card #3 Criação de Contas -->
         <div class="col">
             <div class="card" style="width: 18rem;">
@@ -59,6 +60,30 @@
                     <h5 class="card-title">Criar contas</h5>
                     <p class="card-text">Se pretende criar uma nova conta, clique no botão para ser redirecionado.</p>
                     <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary">Criar conta</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card #3 Gestão Anos Letivos -->
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img height="200" src="/Icons/calendario.gif" class="card-img-top" alt="Anos Letivos">
+                <div class="card-body">
+                    <h5 class="card-title">Anos Letivos</h5>
+                    <p class="card-text">Se pretende gerenciar anos letivos, clique no botão para ser redirecionado.</p>
+                    <a asp-controller="AnosLetivos" asp-action="Index" class="btn btn-primary">Gerir Anos Letivos</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card #3 Gestão Tipos de Identificação -->
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img height="200" src="/Icons/identificacao.gif" class="card-img-top" alt="Tipos de Identificação">
+                <div class="card-body">
+                    <h5 class="card-title">Tipos de Identificação</h5>
+                    <p class="card-text">Se pretende gerenciar tipos de identificação, clique no botão para ser redirecionado.</p>
+                    <a asp-controller="TiposIdentificacoes" asp-action="Index" class="btn btn-primary">Gerir Tipos de Identificação</a>
                 </div>
             </div>
         </div>

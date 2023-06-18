@@ -117,28 +117,49 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
         [Authorize]
         [HttpGet("Alunos/Lista")]
         public async Task<ActionResult<IEnumerable<AlunoViewModel>>> GetAlunos() {
+            
             var loggedUser = await _userManager.GetUserAsync(User);
             var loggedUserId = await _userManager.GetUserIdAsync(loggedUser);
-            var loggedResponsavelId = await _baseDados.Responsaveis
-                .Where(r => r.UserID.Equals(loggedUserId))
-                .Select(r => r.Id)
-                .FirstOrDefaultAsync();
 
-            return await _baseDados.Alunos
-                .Include(a => a.Responsavel)
-                .Where(a => a.ResponsavelFK.Equals(loggedResponsavelId))
-                .OrderBy(a => a.Nome)
-                .Select(a => new AlunoViewModel {
-                    Id = a.Id,
-                    Nome = a.Nome,
-                    Identificacao = a.Identificacao,
-                    TipoIdentificacao = a.TipoIdentificacaoFK,
-                    NIF = a.NIF,
-                    DataNascimento = a.DataNascimento,
-                    Responsavel = a.Responsavel.Nome,
-                    Avaliacao = a.Avaliacao
-                })
-                .ToListAsync();
+            if (User.IsInRole("Enc. de Educação")) {
+                var loggedResponsavelId = await _baseDados.Responsaveis
+                    .Where(r => r.UserID.Equals(loggedUserId))
+                    .Select(r => r.Id)
+                    .FirstOrDefaultAsync();
+
+                return await _baseDados.Alunos
+                    .Include(a => a.Responsavel)
+                    .Where(a => a.ResponsavelFK.Equals(loggedResponsavelId))
+                    .OrderBy(a => a.Nome)
+                    .Select(a => new AlunoViewModel {
+                        Id = a.Id,
+                        Nome = a.Nome,
+                        Identificacao = a.Identificacao,
+                        TipoIdentificacao = a.TipoIdentificacaoFK,
+                        NIF = a.NIF,
+                        DataNascimento = a.DataNascimento,
+                        Responsavel = a.Responsavel.Nome,
+                        Avaliacao = a.Avaliacao
+                    })
+                    .ToListAsync();
+            } else if (User.IsInRole("Professor")) {
+                return await _baseDados.Alunos
+                    .Include(a => a.Responsavel)
+                    .OrderBy(a => a.Nome)
+                    .Select(a => new AlunoViewModel {
+                        Id = a.Id,
+                        Nome = a.Nome,
+                        Identificacao = a.Identificacao,
+                        TipoIdentificacao = a.TipoIdentificacaoFK,
+                        NIF = a.NIF,
+                        DataNascimento = a.DataNascimento,
+                        Responsavel = a.Responsavel.Nome,
+                        Avaliacao = a.Avaliacao
+                    })
+                    .ToListAsync();
+            }
+
+            return NoContent();
         }
 
         /// <summary>
@@ -146,7 +167,7 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize]
+        [Authorize("Professor")]
         [HttpPost("Alunos/Avaliar")]
         public async Task<IActionResult> AvaliarAluno([FromQuery] int alunoId, [FromBody] string avaliacao) {
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +13,7 @@ using Projeto_Jardim_Escola.Models;
 namespace Projeto_Jardim_Escola.Controllers
 {
 
+    [Authorize]
     public class AlunosController : Controller
     {
         // Criar uma instância de acesso à base de dados.
@@ -149,6 +151,7 @@ namespace Projeto_Jardim_Escola.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK, Avaliacao")] Alunos alunos, IFormFile fotografia)
         {
+                        
             if (id != alunos.Id)
             {
                 return NotFound();
@@ -217,18 +220,20 @@ namespace Projeto_Jardim_Escola.Controllers
                 // Remove o aluno.
                 _baseDados.Alunos.Remove(alunos);
 
-                // Remove a fotografia associada ao aluno.
-                string nomeLocalizacaoFicheiro = _webHostEnvironment.WebRootPath;
-                nomeLocalizacaoFicheiro = Path.Combine(nomeLocalizacaoFicheiro, "Fotos");
+                if (alunos.Foto != null) {
+                    // Remove a fotografia associada ao aluno.
+                    string nomeLocalizacaoFicheiro = _webHostEnvironment.WebRootPath;
+                    nomeLocalizacaoFicheiro = Path.Combine(nomeLocalizacaoFicheiro, "Fotos");
 
-                // Nome do documento a eliminar.
-                string nomeDaFoto = Path.Combine(nomeLocalizacaoFicheiro, alunos.Foto);
+                    // Nome do documento a eliminar.
+                    string nomeDaFoto = Path.Combine(nomeLocalizacaoFicheiro, alunos.Foto);
 
-                //System.Diagnostics.Debug.WriteLine(nomeDaFoto);
+                    //System.Diagnostics.Debug.WriteLine(nomeDaFoto);
 
-                if (Path.GetFileName(nomeDaFoto) != "default.png") {
-                    //System.Diagnostics.Debug.WriteLine("ESTOU A ELIMINAR.....");
-                    System.IO.File.Delete(nomeDaFoto);
+                    if (Path.GetFileName(nomeDaFoto) != "semfoto.jpg") {
+                        //System.Diagnostics.Debug.WriteLine("ESTOU A ELIMINAR.....");
+                        System.IO.File.Delete(nomeDaFoto);
+                    }
                 }
             }
             
