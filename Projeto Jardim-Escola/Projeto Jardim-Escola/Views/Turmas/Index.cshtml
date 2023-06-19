@@ -6,9 +6,12 @@
 
 <h1>TURMAS</h1>
 
-<p>
-    <a asp-action="Create">Adicionar registo</a>
-</p>
+@if (User.IsInRole("Admin")) {
+    <p>
+        <a asp-action="Create">Adicionar registo</a>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -38,9 +41,13 @@
                 @Html.DisplayFor(modelItem => item.Professor.Nome)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                @if (User.IsInRole("Admin")) {
+                    <a class="btn btn-warning btn-sm btn-outline-light" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                }
+                <a class="btn btn-info btn-sm btn-outline-light" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                @if (User.IsInRole("Admin")) {
+                    <a class="btn btn-danger btn-sm btn-outline-light" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                }
             </td>
         </tr>
 }

@@ -10,24 +10,51 @@ using Projeto_Jardim_Escola.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace Projeto_Jardim_Escola.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Professor")]
     public class TurmasController : Controller
     {
         private readonly ApplicationDbContext _baseDados;
 
-        public TurmasController(ApplicationDbContext context)
+        // Criar uma instância de acesso aos dados do utilizador logado.
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public TurmasController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _baseDados = context;
+            _userManager = userManager;
         }
 
         // GET: Turmas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _baseDados.Turmas.Include(t => t.AnoLetivo).Include(t => t.Professor);
-            return View(await applicationDbContext.ToListAsync());
+            var turmas = _baseDados.Turmas.Include(t => t.AnoLetivo).Include(t => t.Professor);
+
+            // Se o utilizador for um Professor..
+            //      mostra só as turmas associadas a ele.
+            if (User.IsInRole("Professor")) {
+
+                var loggedUser = await _userManager.GetUserAsync(User);
+                var loggedUserId = await _userManager.GetUserIdAsync(loggedUser); // Guarda o Id (GUID) do atual utilizador logado.
+
+                var professorId = _baseDados.Professores.FirstOrDefault(p => p.UserID == loggedUserId)?.Id;
+
+                if (professorId == null) {
+                    return NoContent();
+                }
+
+                var turmasProfessor = _baseDados.Turmas.Include(t => t.AnoLetivo).Include(t => t.Professor).Where(t => t.ProfessorFK == professorId);
+
+                //var alunosResp = _baseDados.Alunos.Include(a => a.TipoIdentificacao).Include(a => a.Responsavel).Where(a => a.ResponsavelFK == responsavelId);
+
+                return View(await turmasProfessor.ToListAsync());
+
+            }
+
+            return View(await turmas.ToListAsync());
         }
 
         // GET: Turmas/Details/5

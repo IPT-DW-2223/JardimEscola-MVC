@@ -13,8 +13,6 @@ using Projeto_Jardim_Escola.Models;
 
 namespace Projeto_Jardim_Escola.Controllers
 {
-
-    [Authorize]
     public class AlunosController : Controller
     {
         // Criar uma instância de acesso à base de dados.
@@ -81,6 +79,7 @@ namespace Projeto_Jardim_Escola.Controllers
         }
 
         // GET: Alunos/Create
+        [Authorize(Roles = "Admin")]
         [Authorize("Administrador")]
         public IActionResult Create()
         {
@@ -94,6 +93,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos, IFormFile fotografia)
         {
             // Verifica se foi introduzida alguma foto.
@@ -153,6 +153,7 @@ namespace Projeto_Jardim_Escola.Controllers
         }
 
         // GET: Alunos/Edit/5
+        [Authorize(Roles = "Admin, Professor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _baseDados.Alunos == null)
@@ -175,6 +176,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Professor")]
         public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK, Avaliacao")] Alunos alunos, IFormFile fotografia)
         {
                         
@@ -209,6 +211,7 @@ namespace Projeto_Jardim_Escola.Controllers
         }
 
         // GET: Alunos/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _baseDados.Alunos == null)
@@ -231,6 +234,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // POST: Alunos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
 
