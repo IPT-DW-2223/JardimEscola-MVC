@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,16 +23,40 @@ namespace Projeto_Jardim_Escola.Controllers
         // Variável que vai conter os dados do servidor.
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AlunosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        // Criar uma instância de acesso aos dados do utilizador logado.
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public AlunosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, UserManager<IdentityUser> userManager)
         {
             _baseDados = context;
             _webHostEnvironment = webHostEnvironment;
+            _userManager = userManager;
         }
 
         // GET: Alunos
         public async Task<IActionResult> Index()
         {
             var alunos = _baseDados.Alunos.Include(a => a.TipoIdentificacao).Include(a => a.Responsavel);
+
+            // Se o utilizador for um Encarregado de Educação..
+            //      mostra só os alunos associado a ele.
+            if (User.IsInRole("Enc. de Educação")) {
+                
+                var loggedUser = await _userManager.GetUserAsync(User);
+                var loggedUserId = await _userManager.GetUserIdAsync(loggedUser); // Guarda o Id (GUID) do atual utilizador logado.
+
+                var responsavelId = _baseDados.Responsaveis.FirstOrDefault(r => r.UserID == loggedUserId)?.Id;
+
+                if (responsavelId == null) {
+                    return NoContent();
+                }
+
+                var alunosResp = _baseDados.Alunos.Include(a => a.TipoIdentificacao).Include(a => a.Responsavel).Where(a => a.ResponsavelFK == responsavelId);
+
+                return View(await alunosResp.ToListAsync());
+
+            }
+
             return View(await alunos.ToListAsync());
         }
 
@@ -56,6 +81,7 @@ namespace Projeto_Jardim_Escola.Controllers
         }
 
         // GET: Alunos/Create
+        [Authorize("Administrador")]
         public IActionResult Create()
         {
             ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome");

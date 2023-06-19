@@ -98,11 +98,6 @@
                         @Html.DisplayFor(modelItem => item.Avaliacao)
                     </td>
                     <td>
-                        <a class="btn btn-warning btn-sm btn-outline-light" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
-                        <a class="btn btn-info btn-sm btn-outline-light" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
-                        @if (User.IsInRole("Administrador")) {
-                            <a class="btn btn-danger btn-sm btn-outline-light" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
-                        }
                     </td>
        
                 </tr>
@@ -154,7 +149,9 @@
                         @Html.DisplayFor(modelItem => item.Avaliacao)
                     </td>
                     <td>
-                        <a class="btn btn-warning btn-sm btn-outline-light" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Professor")) {
+                            <a class="btn btn-warning btn-sm btn-outline-light" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                        }
                         <a class="btn btn-info btn-sm btn-outline-light" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
                         @if (User.IsInRole("Admin")) {
                             <a class="btn btn-danger btn-sm btn-outline-light" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
