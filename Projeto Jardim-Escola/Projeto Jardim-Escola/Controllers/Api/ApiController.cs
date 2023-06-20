@@ -171,8 +171,6 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
         [HttpPost("Alunos/Avaliar")]
         public async Task<IActionResult> AvaliarAluno([FromQuery] int alunoId, [FromBody] string avaliacao) {
 
-            // TODO: verificar se o user logado é professor.
-
             if (avaliacao == "") { avaliacao = "Não revela progressos"; } 
 
             // Encontrar o aluno com o Id fornecido.

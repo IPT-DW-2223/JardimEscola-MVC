@@ -1,20 +1,23 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> _signInManager
+@inject UserManager<IdentityUser> _userManager
 
 <ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
-    {
+    @if (_signInManager.IsSignedIn(User)) {
         <li class="nav-item">
             @if (User.IsInRole("Admin")) {
-                <strong>Administrador</strong>
+                <p><i>@User.Identity?.Name</i> | <strong>Administrador</strong></p>
             } else if (User.IsInRole("Professor")) {
-                <strong>Professor</strong>
+                <p><i>@User.Identity?.Name</i> | <strong>Professor</strong></p>
             } else if (User.IsInRole("Enc. de Educação")) {
-                <strong>Encarregado de Educação</strong>
+                <p><i>@User.Identity?.Name</i> | <strong>Encarregado de Educação</strong></p>
             } else {
                 <strong>ERRO AO IDENTIFICAR O CARGO!</strong>
             }
+            <form class="text-right" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                @*<button type="button" class="btn btn-outline-primary">Definições da conta</button>*@
+                <button type="submit" class="btn btn-sm btn-outline-danger">Terminar sessão</button>
+            </form>
         </li>
 
         @*<li class="nav-item">        

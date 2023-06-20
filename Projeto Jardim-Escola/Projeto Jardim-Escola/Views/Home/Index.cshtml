@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Início";
 }
 
@@ -8,16 +9,6 @@
 </div>
 
 <br />
-
-<div>
-    <h3>Que bom te ver, @User.Identity.Name!</h3>
-    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-        @*<button type="button" class="btn btn-outline-primary">Definições da conta</button>*@
-        <button type="submit" class="btn btn-outline-danger">Terminar sessão</button>
-    </form>
-</div>
-
-<hr />
 
 <!-- Secção dos cards -->
 <div class="row row-cols-1 row-cols-md-4 g-4">

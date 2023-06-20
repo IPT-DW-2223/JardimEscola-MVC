@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Projeto_Jardim_Escola.Data;
 using Projeto_Jardim_Escola.Models;
 using System.Diagnostics;
 

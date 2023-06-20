@@ -137,8 +137,6 @@ namespace Projeto_Jardim_Escola.Controllers
                 return NotFound();
             }
 
-            // TODO: ("TurmasController.cs") acrescentar tabela com lista de alunos.
-
             ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo", turma.AnoLetivoFK);
             ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome", turma.ProfessorFK);
             return View(turma);

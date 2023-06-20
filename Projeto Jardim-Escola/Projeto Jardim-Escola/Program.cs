@@ -20,7 +20,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
  * Declarar a existência do serviço de Autenticação
  *  e declaração da classe com os dados do utilizador registado.
  */
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<IdentityUser>(
+    options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>() // Adiciona a capacidade da app de identificar 'perfis' de utilizador.
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
