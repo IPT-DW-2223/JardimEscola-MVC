@@ -16,11 +16,6 @@ namespace Projeto_Jardim_Escola.Controllers
     public class AlunosController : Controller
     {
 
-        /*
-         ********* LISTA DE TODO'S *********
-         * TODO: Bloquear a textboxes quando o professor pretende editar os dados do aluno.
-         */
-
         // Criar uma instância de acesso à base de dados.
         private readonly ApplicationDbContext _baseDados;
 

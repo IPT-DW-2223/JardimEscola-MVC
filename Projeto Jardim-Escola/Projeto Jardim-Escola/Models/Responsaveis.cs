@@ -46,9 +46,10 @@ namespace Projeto_Jardim_Escola.Models {
         /// <summary>
         /// Email do encarregado de educação.
         /// </summary>
-        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
-        [Display(Name = "Email")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "O {0} não está corretamente escrito")]
+        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+        [RegularExpression("[a-z._0-9]+@gmail.com", ErrorMessage = "O {0} tem de ser do GMail")]
+        [StringLength(40)]
         public string Email { get; set; }
 
         /// <summary>

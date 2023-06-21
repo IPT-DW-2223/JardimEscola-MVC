@@ -9,7 +9,7 @@ namespace Projeto_Jardim_Escola.Models
     public class Pessoas {
 
         /// <summary>
-        /// Chave primária da turma.
+        /// Chave primária das pessoas.
         /// </summary>
         [Key]
         public int Id { get; set; }
