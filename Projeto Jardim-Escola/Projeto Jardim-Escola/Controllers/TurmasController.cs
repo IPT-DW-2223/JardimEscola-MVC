@@ -81,7 +81,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // GET: Turmas/Create
         public IActionResult Create()
         {
-            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo");
+            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "NomeAnoLetivo");
             ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome");
 
             return View();
@@ -117,7 +117,7 @@ namespace Projeto_Jardim_Escola.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo", turmas.AnoLetivoFK);
+            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "NomeAnoLetivo", turmas.AnoLetivoFK);
             ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome", turmas.ProfessorFK);
 
             return View(turmas);
@@ -137,7 +137,7 @@ namespace Projeto_Jardim_Escola.Controllers
                 return NotFound();
             }
 
-            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo", turma.AnoLetivoFK);
+            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "NomeAnoLetivo", turma.AnoLetivoFK);
             ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome", turma.ProfessorFK);
             return View(turma);
         }
@@ -174,7 +174,7 @@ namespace Projeto_Jardim_Escola.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "AnoLetivo", turmas.AnoLetivoFK);
+            ViewData["AnoLetivoFK"] = new SelectList(_baseDados.AnosLetivos, "Id", "NomeAnoLetivo", turmas.AnoLetivoFK);
             ViewData["ProfessorFK"] = new SelectList(_baseDados.Professores, "Id", "Nome", turmas.ProfessorFK);
             return View(turmas);
         }
