@@ -23,7 +23,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// </summary>
         [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
         [Display(Name = "Ano Letivo")]
-        public string AnoLetivo { get; set; }
+        public string NomeAnoLetivo { get; set; }
 
         // ---------------------------------------------------------------------------------------- //
         // ----- [Chaves Estrangeiras] ------------------------------------------------------------ //

@@ -59,10 +59,10 @@ namespace Projeto_Jardim_Escola.Data
 
             // Adicionar anos letivos.
             modelBuilder.Entity<AnoLetivo>().HasData(
-                new AnoLetivo { Id = 1, AnoLetivo = "2021-2022" },
-                new AnoLetivo { Id = 2, AnoLetivo = "2022-2023" },
-                new AnoLetivo { Id = 3, AnoLetivo = "2023-2024" },
-                new AnoLetivo { Id = 4, AnoLetivo = "2024-2025" }
+                new AnoLetivo { Id = 1, NomeAnoLetivo = "2021-2022" },
+                new AnoLetivo { Id = 2, NomeAnoLetivo = "2022-2023" },
+                new AnoLetivo { Id = 3, NomeAnoLetivo = "2023-2024" },
+                new AnoLetivo { Id = 4, NomeAnoLetivo = "2024-2025" }
                 );
 
         }
