@@ -81,7 +81,6 @@ namespace Projeto_Jardim_Escola.Controllers
 
         // GET: Alunos/Create
         [Authorize(Roles = "Admin")]
-        [Authorize("Administrador")]
         public IActionResult Create()
         {
             ViewData["TipoIdentificacaoFK"] = new SelectList(_baseDados.TiposIdentificacao, "Id", "Nome");
@@ -180,7 +179,6 @@ namespace Projeto_Jardim_Escola.Controllers
         [Authorize(Roles = "Admin, Professor")]
         public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK, Avaliacao")] Alunos alunos, IFormFile fotografia)
         {
-                        
             if (id != alunos.Id)
             {
                 return NotFound();
