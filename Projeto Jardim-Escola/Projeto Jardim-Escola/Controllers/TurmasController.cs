@@ -92,7 +92,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,AnoLetivoFK,ProfessorFK")] Turmas turmas, string alunosSelecionados)
+        public async Task<IActionResult> Create([Bind("Id,Nome,AnoLetivoFK,ProfessorFK")] Turma turmas, string alunosSelecionados)
         {
             if (ModelState.IsValid) {
                 // Adicionar a turma à base de dados.
@@ -147,7 +147,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,AnoLetivoFK,ProfessorFK")] Turmas turmas)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,AnoLetivoFK,ProfessorFK")] Turma turmas)
         {
             if (id != turmas.Id)
             {
@@ -235,7 +235,7 @@ namespace Projeto_Jardim_Escola.Controllers
             string json = JsonConvert.SerializeObject(alunos);
 
             // Cria uma lista de alunos do tipo List que terá o formato JSON.
-            List<Alunos> listaAlunos = JsonConvert.DeserializeObject<List<Alunos>>(json);
+            List<Aluno> listaAlunos = JsonConvert.DeserializeObject<List<Aluno>>(json);
 
             return Json(listaAlunos);
         }

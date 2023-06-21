@@ -5,11 +5,11 @@ namespace Projeto_Jardim_Escola.Models {
     /// <summary>
     /// Descrição dos anos letivos.
     /// </summary>
-    public class AnosLetivos {
+    public class AnoLetivo {
 
         // ----- [Construtor] --------------------------------------------------------------------- //
-        public AnosLetivos() {
-            Turmas = new HashSet<Turmas>();
+        public AnoLetivo() {
+            Turmas = new HashSet<Turma>();
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// <summary>
         /// Lista de turmas associadas a um ano letivo.
         /// </summary>
-        public ICollection<Turmas> Turmas { get; set; }
+        public ICollection<Turma> Turmas { get; set; }
 
     }
 

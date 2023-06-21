@@ -57,7 +57,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AnoLetivo")] AnosLetivos anosLetivos)
+        public async Task<IActionResult> Create([Bind("Id,AnoLetivo")] AnoLetivo anosLetivos)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AnoLetivo")] AnosLetivos anosLetivos)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AnoLetivo")] AnoLetivo anosLetivos)
         {
             if (id != anosLetivos.Id)
             {

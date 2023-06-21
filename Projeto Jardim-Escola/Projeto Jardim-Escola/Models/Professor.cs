@@ -5,11 +5,11 @@ namespace Projeto_Jardim_Escola.Models {
     /// <summary>
     /// Descrição dos professores.
     /// </summary>
-    public class Professores : Pessoas {
+    public class Professor : Pessoa {
 
         // ----- [Construtor] --------------------------------------------------------------------- //
-        public Professores() {
-            Turmas = new HashSet<Turmas>();
+        public Professor() {
+            Turmas = new HashSet<Turma>();
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// <summary>
         /// Lista de turmas a que o professor está associado.
         /// </summary>
-        public ICollection<Turmas> Turmas { get; set; }
+        public ICollection<Turma> Turmas { get; set; }
 
     }
 

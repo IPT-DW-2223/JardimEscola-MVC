@@ -5,11 +5,11 @@ namespace Projeto_Jardim_Escola.Models {
     /// <summary>
     /// Descrição dos responsáveis (Encarregados de Educação).
     /// </summary>
-    public class Responsaveis : Pessoas {
+    public class Responsavel : Pessoa {
 
         // ----- [Construtor] --------------------------------------------------------------------- //
-        public Responsaveis() {
-            Alunos = new HashSet<Alunos>();
+        public Responsavel() {
+            Alunos = new HashSet<Aluno>();
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// <summary>
         /// Lista de alunos da turma.
         /// </summary>
-        public ICollection<Alunos> Alunos { get; set; }
+        public ICollection<Aluno> Alunos { get; set; }
 
     }
 

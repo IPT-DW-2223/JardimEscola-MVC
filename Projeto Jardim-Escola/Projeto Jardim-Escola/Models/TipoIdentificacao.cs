@@ -5,11 +5,11 @@ namespace Projeto_Jardim_Escola.Models {
     /// <summary>
     /// Descrição dos tipos de identificação.
     /// </summary>
-    public class TiposIdentificacao {
+    public class TipoIdentificacao {
 
         // ----- [Construtor] --------------------------------------------------------------------- //
-        public TiposIdentificacao() {
-            Pessoas = new HashSet<Pessoas>();
+        public TipoIdentificacao() {
+            Pessoas = new HashSet<Pessoa>();
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Projeto_Jardim_Escola.Models {
         /// <summary>
         /// Lista de pessoas associadas a um tipo de identificação.
         /// </summary>
-        public ICollection<Pessoas> Pessoas { get; set; }
+        public ICollection<Pessoa> Pessoas { get; set; }
 
     }
 

@@ -94,7 +94,7 @@ namespace Projeto_Jardim_Escola.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Alunos alunos, IFormFile fotografia)
+        public async Task<IActionResult> Create([Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK")] Aluno alunos, IFormFile fotografia)
         {
             // Verifica se foi introduzida alguma foto.
             if (fotografia == null) {
@@ -177,7 +177,7 @@ namespace Projeto_Jardim_Escola.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Professor")]
-        public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK, Avaliacao")] Alunos alunos, IFormFile fotografia)
+        public async Task<IActionResult> Edit(int id, [Bind("DataNascimento,Genero,Foto,Ativo,ResponsavelFK,Id,Nome,Identificacao,NIF,TipoIdentificacaoFK, Avaliacao")] Aluno alunos, IFormFile fotografia)
         {
             if (id != alunos.Id)
             {

@@ -57,7 +57,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome")] TiposIdentificacao tiposIdentificacao)
+        public async Task<IActionResult> Create([Bind("Id,Nome")] TipoIdentificacao tiposIdentificacao)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace Projeto_Jardim_Escola.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] TiposIdentificacao tiposIdentificacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] TipoIdentificacao tiposIdentificacao)
         {
             if (id != tiposIdentificacao.Id)
             {

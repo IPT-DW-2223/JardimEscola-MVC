@@ -96,12 +96,12 @@ namespace Projeto_Jardim_Escola.Areas.Identity.Pages.Account
             /// <summary>
             /// Coleta dados do responsável.
             /// </summary>
-            public Responsaveis Responsavel { get; set; }
+            public Responsavel Responsavel { get; set; }
 
             /// <summary>
             /// Coleta dados do professor.
             /// </summary>
-            public Professores Professor { get; set; }
+            public Professor Professor { get; set; }
 
             /// <summary>
             /// Este atributo guarda o id da tab que está ativa.

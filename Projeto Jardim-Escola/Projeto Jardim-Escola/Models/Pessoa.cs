@@ -6,7 +6,7 @@ namespace Projeto_Jardim_Escola.Models
     /// <summary>
     /// Descrição das pessoas.
     /// </summary>
-    public class Pessoas {
+    public class Pessoa {
 
         /// <summary>
         /// Chave primária das pessoas.
@@ -44,7 +44,7 @@ namespace Projeto_Jardim_Escola.Models
         [Display(Name = "Tipo de Identificação")]
         public int TipoIdentificacaoFK { get; set; }
         [Display(Name = "Tipo de Identificação")]
-        public TiposIdentificacao TipoIdentificacao { get; set; }
+        public TipoIdentificacao TipoIdentificacao { get; set; }
 
     }
 }

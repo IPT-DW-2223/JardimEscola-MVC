@@ -6,11 +6,11 @@ namespace Projeto_Jardim_Escola.Models {
     /// <summary>
     /// Descrição dos alunos.
     /// </summary>
-    public class Alunos : Pessoas {
+    public class Aluno : Pessoa {
 
         // ----- [Construtor] --------------------------------------------------------------------- //
-        public Alunos() {
-            Turmas = new HashSet<Turmas>();
+        public Aluno() {
+            Turmas = new HashSet<Turma>();
         }
 
         /// <summary>
@@ -58,12 +58,12 @@ namespace Projeto_Jardim_Escola.Models {
         [ForeignKey(nameof(Responsavel))]
         [Display(Name ="Responsável")]
         public int ResponsavelFK { get; set; }
-        public Responsaveis Responsavel { get; set; }
+        public Responsavel Responsavel { get; set; }
 
         /// <summary>
         /// Lista de turmas.
         /// </summary>
-        public ICollection<Turmas> Turmas { get; set; }
+        public ICollection<Turma> Turmas { get; set; }
 
     }
 

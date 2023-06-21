@@ -7,11 +7,11 @@ namespace Projeto_Jardim_Escola.Models {
     /// <summary>
     /// Descrição de uma turma.
     /// </summary>
-    public class Turmas {
+    public class Turma {
 
         // ----- [Construtor] --------------------------------------------------------------------- //
-        public Turmas() { 
-            Alunos = new HashSet<Alunos>();
+        public Turma() { 
+            Alunos = new HashSet<Aluno>();
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Projeto_Jardim_Escola.Models {
         [ForeignKey(nameof(AnoLetivo))]
         [Display(Name = "Ano letivo")]
         public int AnoLetivoFK { get; set; }
-        public AnosLetivos AnoLetivo { get; set; }
+        public AnoLetivo AnoLetivo { get; set; }
 
         /// <summary>
         /// FK para o professor da turma.
@@ -44,12 +44,12 @@ namespace Projeto_Jardim_Escola.Models {
         [ForeignKey(nameof(Professor))]
         [Display(Name = "Professor")]
         public int ProfessorFK { get; set; }
-        public Professores Professor { get; set; }
+        public Professor Professor { get; set; }
 
         /// <summary>
         /// Lista de alunos da turma.
         /// </summary>
-        public ICollection<Alunos> Alunos { get; set; }
+        public ICollection<Aluno> Alunos { get; set; }
 
     }
 
