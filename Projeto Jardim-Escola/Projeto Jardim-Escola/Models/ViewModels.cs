@@ -22,4 +22,12 @@
         public string Avaliacao { get; set; }
     }
 
+    /// <summary>
+    /// Esta class colecta os dados das Pessoas (Professores e Responsáveis) para a API.
+    /// </summary>
+    public class PessoaViewModel {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+    }
+
 }

@@ -41,6 +41,30 @@ namespace Projeto_Jardim_Escola.Controllers.Api {
         }
 
         /// <summary>
+        /// Retorna uma lista de professores.
+        /// </summary>
+        /// <returns>Lista de professores</returns>
+        [HttpGet("Professores/Lista")]
+        public async Task<ActionResult<IEnumerable<PessoaViewModel>>> GetProfessores() {
+            return await _baseDados.Professores.OrderBy(p => p.Nome).Select(p => new PessoaViewModel {
+                    Id = p.Id,
+                    Nome = p.Nome
+                }).ToListAsync();
+        }
+
+        /// <summary>
+        /// Retorna uma lista de responsáveis.
+        /// </summary>
+        /// <returns>Lista de responsáveis</returns>
+        [HttpGet("Responsaveis/Lista")]
+        public async Task<ActionResult<IEnumerable<PessoaViewModel>>> GetResponsaveis() {
+            return await _baseDados.Responsaveis.OrderBy(r => r.Nome).Select(r => new PessoaViewModel {
+                Id = r.Id,
+                Nome = r.Nome
+            }).ToListAsync();
+        }
+
+        /// <summary>
         /// Valida se o utilizador existe.
         /// </summary>
         /// <param name="username"></param>
